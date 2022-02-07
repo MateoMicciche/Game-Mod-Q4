@@ -1,0 +1,28 @@
+MD5Version 10
+commandline "anim work/models/cinematics/old_school_makron/idle.ma -dest models/cinematics/mcc_makron/idle.md5anim -game Quake4 -scale .3937 -prefix MAK_ -align ALL"
+
+numFrames 2
+numJoints 2
+frameRate 24
+numAnimatedComponents 0
+
+hierarchy {
+	"origin"	-1 0 0	//
+	"joint1"	0 0 0	// origin
+}
+
+bounds {
+	( -7.3800868988 -11.2455310822 0.0218453016 ) ( 9.4851827621 11.2455530167 30.0241127014 )
+	( -7.3800868988 -11.2455310822 0.0218453016 ) ( 9.4851827621 11.2455530167 30.0241127014 )
+}
+
+baseframe {
+	( 0 0 0 ) ( -0.5 -0.5 -0.5 )
+	( 0 0 0 ) ( 0 0 0 )
+}
+
+frame 0 {
+}
+
+frame 1 {
+}
