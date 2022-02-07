@@ -105,7 +105,7 @@ void rvWeaponRailgun::Think ( void ) {
 
 	// Let the real weapon think first
 	rvWeapon::Think ( );
-
+	
 	if ( zoomGui && wsfl.zoom && !gameLocal.isMultiplayer ) {
 		int ammo = AmmoInClip();
 		if ( ammo >= 0 ) {
