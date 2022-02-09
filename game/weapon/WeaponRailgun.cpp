@@ -193,7 +193,7 @@ stateResult_t rvWeaponRailgun::State_Fire ( const stateParms_t& parms ) {
 			}
 			else {
 				nextAttackTime = gameLocal.time + (fireRate * owner->PowerUpModifier(PMOD_FIRERATE));
-				Attack(false, 10, 7, 0, 1.0f);
+				Attack(false, 30, 7, 0, 1.0f);
 				PlayAnim(ANIMCHANNEL_ALL, "fireShotgun", 0);
 			}
 			return SRESULT_STAGE(STAGE_WAIT);
