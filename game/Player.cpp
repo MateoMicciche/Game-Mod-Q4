@@ -65,6 +65,10 @@ const float	PLAYER_ITEM_DROP_SPEED	= 100.0f;
 // how many units to raise spectator above default view height so it's in the head of someone
 const int SPECTATE_RAISE = 25;
 
+int	xp=0;									    // Player XP
+int xpNeeded;									// Xp needed to level up
+int lvl=1;										// Player Level
+
 const int	HEALTH_PULSE		= 1000;			// Regen rate and heal leak rate (for health > 100)
 const int	ARMOR_PULSE			= 1000;			// armor ticking down due to being higher than maxarmor
 const int	AMMO_REGEN_PULSE	= 1000;			// ammo regen in Arena CTF
@@ -2640,6 +2644,35 @@ void idPlayer::Restore( idRestoreGame *savefile ) {
 	declManager->FindType( DECL_ENTITYDEF, "dmg_shellshock", false, false );
 	declManager->FindType( DECL_ENTITYDEF, "dmg_shellshock_nohl", false, false );
 // RAVEN END
+}
+
+int idPlayer::GetXP()
+{
+	return xp;
+}
+
+void idPlayer::SetXP(int experi)
+{
+	xp += experi;
+}
+
+void idPlayer::CheckLevel()
+{
+	if (xp > xpNeeded) {
+		lvl += 1;
+		(int)xpNeeded = xp * 1.50;
+		gameLocal.Printf("Current Player level is now %i\n", lvl);
+		gameLocal.Printf("You now need %i to level again\n", xpNeeded);
+	}
+
+	switch (lvl) {
+		case '5':
+			break;
+		case '10':
+			break;
+		case '15':
+			break;
+	}
 }
 
 /*
@@ -9967,6 +10000,7 @@ void idPlayer::CalcDamagePoints( idEntity *inflictor, idEntity *attacker, const 
 	damageDef->GetInt( "damage", "20", damage );
 	damage = GetDamageForLocation( damage, location );
 
+
 	// optional different damage in team games
 	if( gameLocal.isMultiplayer && gameLocal.IsTeamGame() && damageDef->GetInt( "damage_team" ) ) {
 		damage = damageDef->GetInt( "damage_team" );
@@ -10078,6 +10112,7 @@ void idPlayer::Damage( idEntity *inflictor, idEntity *attacker, const idVec3 &di
 	}
 	// RAVEN END
 
+
 	if ( forwardDamageEnt.IsValid() ) {
 		forwardDamageEnt->Damage( inflictor, attacker, dir, damageDefName, modifiedDamageScale, location );
 		return;
@@ -10087,7 +10122,7 @@ void idPlayer::Damage( idEntity *inflictor, idEntity *attacker, const idVec3 &di
 	if ( gameLocal.isClient ) {
 		return;
 	}
-	
+
  	if ( !fl.takedamage || noclip || spectating || gameLocal.inCinematic ) {
 		// If in vehicle let it know that something is trying to hurt the invisible player
 		if ( IsInVehicle ( ) ) {

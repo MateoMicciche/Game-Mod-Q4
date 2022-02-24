@@ -2924,7 +2924,8 @@ void Cmd_AddIcon_f( const idCmdArgs& args ) {
 // squirrel: Mode-agnostic buymenus
 void Cmd_ToggleBuyMenu_f( const idCmdArgs& args ) {
 	idPlayer* player = gameLocal.GetLocalPlayer();
-	if ( player && player->CanBuy() )
+	gameLocal.Printf("This command is being reached!!!!");
+	if ( player && true )									// player->CanBuy() replaced with true so buy command works.
 	{
 		gameLocal.mpGame.OpenLocalBuyMenu();
 	}

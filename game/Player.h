@@ -438,6 +438,11 @@ public:
 	void					Save( idSaveGame *savefile ) const;					// archives object for save game file
 	void					Restore( idRestoreGame *savefile );					// unarchives object from save game file
 
+	int					    GetXP();											// Gets player xp
+	void					SetXP(int experi);									// Sets player xp
+	void					CheckLevel();										// Checks players level and determines if the player gets perks
+
+
 	static const char*		GetSpawnClassname ( void );
 
 	virtual void			Hide( void );

@@ -1625,6 +1625,14 @@ void idAI::Killed( idEntity *inflictor, idEntity *attacker, int damage, const id
 		return;
 	}
 
+	if (attacker->IsType(idActor::GetClassType())) {
+		idPlayer* player = (idPlayer*)attacker;
+		player->SetXP(20);
+		player->CheckLevel();
+		gameLocal.Printf("%s\n", player->GetName());
+		gameLocal.Printf("%i\n", player->GetXP());
+	}
+
 	aifl.dead = true;
 
 	// turn off my flashlight, if I had one
