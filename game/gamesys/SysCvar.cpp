@@ -103,7 +103,7 @@ idCVar si_weaponStay(				"si_weaponStay",			"0",			CVAR_GAME | CVAR_SERVERINFO |
 // RITUAL BEGIN
 // DeadZone Mode and Buying related CVARS
 idCVar si_deadZonePowerupTime(		"si_deadZonePowerupTime",		"45",			CVAR_GAME | CVAR_SERVERINFO | CVAR_INTEGER, "Amount of time the dead zone powerup lasts" );
-idCVar si_buyModeStartingCredits(	"si_buyModeStartingCredits",	"1000",			CVAR_GAME | CVAR_SERVERINFO | CVAR_INTEGER, "Amount of credits players start with in buying enable games" );
+idCVar si_buyModeStartingCredits(	"si_buyModeStartingCredits",	"3000",			CVAR_GAME | CVAR_SERVERINFO | CVAR_INTEGER, "Amount of credits players start with in buying enable games" );
 idCVar si_buyModeMaxCredits(		"si_buyModeMaxCredits",			"25000",		CVAR_GAME | CVAR_SERVERINFO | CVAR_INTEGER, "Maximum amount of credits in buying enable games" );
 idCVar si_buyModeMinCredits(		"si_buyModeMinCredits",			"0",			CVAR_GAME | CVAR_SERVERINFO | CVAR_INTEGER, "Minimum amount of credits in buying enable games" );
 idCVar si_controlTime(				"si_controlTime",				"120",			CVAR_GAME | CVAR_SERVERINFO | CVAR_ARCHIVE | CVAR_INTEGER, "Time required to hold the dead zone", 1, 999 );
@@ -149,6 +149,7 @@ idCVar g_monsters(					"g_monsters",				"1",			CVAR_GAME | CVAR_BOOL, "" );
 idCVar g_decals(					"g_decals",					"1",			CVAR_GAME | PC_CVAR_ARCHIVE | CVAR_BOOL, "show decals such as bullet holes" );
 idCVar g_knockback(					"g_knockback",				"1000",			CVAR_GAME | CVAR_INTEGER, "" );
 idCVar g_skill(						"g_skill",					"1",			CVAR_GAME | CVAR_INTEGER, "difficulty level", 0, MAX_SKILL_LEVELS - 1 );
+idCVar g_player_class(				"g_player_class",			"1",			CVAR_GAME | CVAR_INTEGER, "players class", 0, MAX_CLASSES - 1);
 idCVar g_nightmare(					"g_nightmare",				"0",			CVAR_GAME | CVAR_ARCHIVE | CVAR_BOOL, "if nightmare mode is allowed" );
 idCVar g_gravity(					"g_gravity",		DEFAULT_GRAVITY_STRING, CVAR_GAME | CVAR_FLOAT, "singleplayer gravity" );
 idCVar g_mp_gravity(				"g_mp_gravity",		DEFAULT_MP_GRAVITY_STRING, CVAR_GAME | CVAR_FLOAT, "multiplayer gravity" );

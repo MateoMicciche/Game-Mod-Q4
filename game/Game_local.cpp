@@ -62,6 +62,7 @@ idAnimManager				*animationLib = NULL;
 // the rest of the engine will only reference the "game" variable, while all local aspects stay hidden
 idGameLocal					gameLocal;
 idGame *					game = &gameLocal;	// statically pointed at an idGameLocal
+const char*					typeClass;
 
 const char *idGameLocal::sufaceTypeNames[ MAX_SURFACE_TYPES ] = {
 	"none",	"metal", "stone", "flesh", "wood", "cardboard", "liquid", "glass", "plastic",
@@ -2066,7 +2067,8 @@ bool idGameLocal::InitFromSaveGame( const char *mapName, idRenderWorld *renderWo
 	// Precache the player
 // RAVEN BEGIN
 // bdube: changed so we actually cache stuff
-	FindEntityDef( idPlayer::GetSpawnClassname() );
+	gameLocal.Printf("This is the typeClass value before passing %s", typeClass);
+	FindEntityDef( idPlayer::GetSpawnClassname("1"));
 
 // abahr: saving clientEntities
 	for( i = 0; i < MAX_CENTITIES; i++ ) {
@@ -2922,7 +2924,9 @@ void idGameLocal::SpawnPlayer( int clientNum ) {
 	args.Set( "name", va( "player%d", clientNum + 1 ) );
 // RAVEN BEGIN
 // bdube: changed marine class
-	args.Set( "classname", idPlayer::GetSpawnClassname() );
+	typeClass = g_player_class.GetString();
+	gameLocal.Printf("This is the typeClass value before passing a second time %s\n", typeClass);
+	args.Set( "classname", idPlayer::GetSpawnClassname(typeClass) );
 // RAVEN END
 	
 	// This takes a really long time.
@@ -3084,6 +3088,21 @@ idPlayer *idGameLocal::GetLocalPlayer() const {
 	
 	return static_cast<idPlayer *>( entities[ localClientNum ] );
 }
+
+void idGameLocal::SetPlayerClass(const char* num)
+{
+	typeClass = num;
+	gameLocal.Printf("The typeClass is %s\n", typeClass);
+	gameLocal.Printf("The num passed in is %s\n", num);
+}
+
+const char* idGameLocal::GetPlayerClass()
+{
+	gameLocal.Printf("The number of the class retrieved was %s\n", typeClass);
+	return typeClass;
+}
+
+
 
 /*
 ================
@@ -3938,6 +3957,7 @@ escReply_t idGameLocal::HandleESC( idUserInterface **gui ) {
 		if ( player->HandleESC() ) {
 			return ESC_IGNORE;
 		} else {
+			gameLocal.Printf("AYO\n");
 			return ESC_MAIN;
 		}
 	}

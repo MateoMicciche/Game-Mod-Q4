@@ -748,6 +748,8 @@ public:
 	int						GetClientNumByName( const char *name ) const;
 
 	idPlayer *				GetLocalPlayer() const;
+	void					SetPlayerClass(const char* num);
+	const char *			GetPlayerClass();
 	
 // RAVEN BEGIN
 // jshepard: update player data after main menu close

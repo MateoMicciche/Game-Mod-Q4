@@ -1,0 +1,85 @@
+windowDef Desktop
+{
+	rect	0,0,640,480
+	visible	1
+	nocursor	0
+	menugui	1
+
+	onActivate {
+		setFocus 	"Note";
+	}
+
+	windowDef traderMenu
+	{
+		rect	303,36,315,404
+		visible	1
+		backcolor	1,1,1,0.352
+		windowDef Shotgun
+		{
+			rect	22,36,270,30
+			visible	1
+			backcolor	0,0.501,0,1
+			forecolor	1,1,1,1
+			text	"Shotgun - $200"
+			textscale	0.4
+			textalign	1
+		}
+		windowDef Machinegun
+		{
+			rect	23,79,267,30
+			visible	1
+			backcolor	0,0.501,0,1
+			forecolor	1,1,1,1
+			text	"Machinegun-$400"
+			textscale	0.4
+			textalign	1
+		}
+		windowDef Ammo
+		{
+			rect	52,293,209,44
+			visible	1
+			backcolor	0,0.501,0,1
+			text	"Buy Ammo"
+			forecolor	1,1,1,1
+			textscale	0.5
+			textalign	1
+		}
+		windowDef Armor
+		{
+			rect	52,346,210,41
+			visible	1
+			backcolor	0,0.501,0,1
+			text	"Buy Armor"
+			forecolor	1,1,1,1
+			textscale	0.5
+			textalign	1
+		}
+	}
+	windowDef p_btns
+	{
+		rect	303,36,315,404
+		visible	1
+		windowDef btn_Shotgun
+		{
+			rect	22,36,270,30
+			visible	1
+
+			onAction {
+				consoleCMD "buy weapon_shotgun" ;
+				
+			}
+
+		}
+		windowDef btn_Machinegun
+		{
+			rect	23,79,267,30
+			visible	1
+
+			onAction {
+				consoleCMD "buy weapon_machinegun" ;
+				
+			}
+
+		}
+	}
+}

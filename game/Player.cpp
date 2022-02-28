@@ -4,6 +4,7 @@
 // MERGE_DATE 09/30/2004
 
 #include "../idlib/precompiled.h"
+#include "map"
 #pragma hdrstop
 
 #include "Game_local.h"
@@ -68,6 +69,8 @@ const int SPECTATE_RAISE = 25;
 int	xp=0;									    // Player XP
 int xpNeeded;									// Xp needed to level up
 int lvl=1;										// Player Level
+int dosh=0;										// Player currency, dropped from enemies
+const char * classNum;
 
 const int	HEALTH_PULSE		= 1000;			// Regen rate and heal leak rate (for health > 100)
 const int	ARMOR_PULSE			= 1000;			// armor ticking down due to being higher than maxarmor
@@ -210,6 +213,7 @@ void idInventory::Clear( void ) {
 	armor				= 0;
 	maxarmor			= 0;
 	secretAreasDiscovered = 0;
+	dosh = 1000;
 
 	memset( ammo, 0, sizeof( ammo ) );
 
@@ -408,6 +412,7 @@ void idInventory::Save( idSaveGame *savefile ) const {
 	savefile->WriteInt( powerups );
 	savefile->WriteInt( armor );
 	savefile->WriteInt( maxarmor );
+	savefile->WriteInt(dosh);
 
 	for( i = 0; i < MAX_AMMO; i++ ) {
 		savefile->WriteInt( ammo[ i ] );
@@ -564,6 +569,16 @@ void idInventory::Restore( idRestoreGame *savefile ) {
 	savefile->ReadInt( secretAreasDiscovered );
 
 	savefile->ReadSyncId( "idInventory::Restore" );
+}
+
+int idInventory::GetDosh()
+{
+	return dosh;
+}
+
+void idInventory::SetDosh(int mulah)
+{
+	dosh += mulah;
 }
 
 /*
@@ -895,7 +910,14 @@ bool idInventory::Give( idPlayer *owner, const idDict &spawnArgs, const char *st
 		if ( armor >= maxarmor * 2 ) {
 			return false;
 		}
-	} else 	if ( !idStr::Icmp( statname, "health" ) ) {
+	}
+	else if (!idStr::Icmp(statname, "dosh")) {
+		dosh += 100;
+		gameLocal.Printf("I got dosh %i\n", dosh);
+		if (dosh > 4000) {
+			return false;
+		}
+	} else if ( !idStr::Icmp( statname, "health" ) ) {
 		if ( owner->health >= maxHealth ) {
 			return false;
 		}
@@ -1110,6 +1132,7 @@ idPlayer::idPlayer() {
 
 	hud						= NULL;
 	mphud					= NULL;
+	trader					= NULL;
 	objectiveSystem			= NULL;
 	objectiveSystemOpen		= false;
 	showNewObjectives		= false;
@@ -1851,7 +1874,8 @@ void idPlayer::Spawn( void ) {
 		objectiveSystem = NULL;
 
 		if ( spawnArgs.GetString( "hud", "", temp ) ) {
-			hud = uiManager->FindGui( temp, true, false, true );
+			hud = uiManager->FindGui( temp, true, false, true);
+			trader = uiManager->FindGui("guis/buymenu.gui", true, false, true);
 		} else {
 			gameLocal.Warning( "idPlayer::Spawn() - No hud for player." );
 		}
@@ -2675,6 +2699,23 @@ void idPlayer::CheckLevel()
 	}
 }
 
+void idPlayer::AssignPlayerClass(const char * num)
+{	
+	// 1 for Gunslinger
+	// 2 for Demo
+	// 3 for Beserker
+	int number = atoi(num);
+	if (number == 1) {
+		gameLocal.Printf("I am a Gunslinger\n");
+	}
+	else if (number == 2) {
+		gameLocal.Printf("I am a Demo\n");
+	}
+	else {
+		gameLocal.Printf("I am a Beserker\n");
+	}
+}
+
 /*
 ===============
 idPlayer::PrepareForRestart
@@ -3415,6 +3456,12 @@ void idPlayer::UpdateHudAmmo( idUserInterface *_hud ) {
 	_hud->SetStateBool( "player_ammo_empty", ( ammoamount == 0 ) );
 }
 
+void idPlayer::UpdateTrader(idUserInterface* menu)
+{
+	trader->Redraw(gameLocal.time);
+	return;
+}
+
 /*
 ===============
 idPlayer::UpdateHudStats
@@ -3812,6 +3859,26 @@ void idPlayer::DrawHUD( idUserInterface *_hud ) {
 			overlayHudTime = 0;
 		}
 	}
+}
+
+void idPlayer::DrawTrader(idPlayer* player)
+{
+	if (pfl.isTraderOpened) {
+		pfl.traderOpen = true;
+		//gameLocal.Printf("Opened Trader Menu\n");
+		trader->Activate(true, gameLocal.time);
+		ActiveGui();
+		SetFocus(FOCUS_GUI, FOCUS_GUI_TIME, player, trader);
+		RouteGuiMouse(trader);
+		player->disableHud = true;
+		UpdateTrader(trader);
+	}
+	else {
+		//gameLocal.Printf("Closed Trader Menu!\n");
+		trader->Activate(false, gameLocal.time);
+		player->disableHud = false;
+	}
+
 }
 
 /*
@@ -7263,6 +7330,7 @@ void idPlayer::UpdateFocus( void ) {
 			command = ui->HandleEvent( &ev, gameLocal.time );
  			HandleGuiCommands( ent, command );
 			
+			
 #ifdef _XENON
 			int usepad = 0;
 			if ( focusUI ) {
@@ -8180,7 +8248,16 @@ int idPlayer::GetItemCost( const char* itemName ) {
 		assert( false );
 		return 99999;
 	}
-	return itemCosts->dict.GetInt( itemName, "99999" );
+
+	idDict traderCosts;													// traderCosts for determining how much an item is worth
+	traderCosts.Set("weapon_shotgun", "200");
+	traderCosts.Set("weapon_machinegun", "400");
+	traderCosts.Set("ammorefill", "100");
+	traderCosts.Set("item_armor_small", "150");
+	traderCosts.Set("item_armor_large", "300");
+
+	//itemCosts->dict.GetInt( itemName, "99999" );
+	return traderCosts.GetInt(itemName);
 }
 
 /*
@@ -8314,7 +8391,8 @@ itemBuyStatus_t idPlayer::ItemBuyStatus( const char* itemName )
 		return IBS_ALREADY_HAVE;
 
 	int cost = GetItemCost(itemName);
-	if ( cost > (int)buyMenuCash )
+	idPlayer* player = gameLocal.GetLocalPlayer();
+	if ( cost > player->inventory.GetDosh() )
 	{
 		return IBS_CANNOT_AFFORD;
 	}
@@ -8403,6 +8481,8 @@ idPlayer::AttemptToBuyItem
 */
 bool idPlayer::AttemptToBuyItem( const char* itemName )
 {
+
+	gameLocal.Printf("%s is being bought\n", itemName);
 	if ( gameLocal.isClient ) {
 		return false;
 	}
@@ -8422,7 +8502,11 @@ bool idPlayer::AttemptToBuyItem( const char* itemName )
 	const char* playerName = GetUserInfo()->GetString( "ui_name" );
 	common->DPrintf( "Player %s about to buy item %s; player has %d (%g) credits, cost is %d\n", playerName, itemName, (int)buyMenuCash, buyMenuCash, itemCost );
 
-	buyMenuCash -= (float)itemCost;
+	idPlayer* player = gameLocal.GetLocalPlayer();
+	gameLocal.Printf("%i is cash\n", inventory.dosh);
+	gameLocal.Printf("%i is itemCost\n", itemCost);
+
+	player->inventory.SetDosh(-itemCost);
 
 	common->DPrintf( "Player %s just bought item %s; player now has %d (%g) credits, cost was %d\n", playerName, itemName, (int)buyMenuCash, buyMenuCash, itemCost );
 
@@ -8449,8 +8533,8 @@ bool idPlayer::CanBuy( void ) {
 
 
 void idPlayer::GenerateImpulseForBuyAttempt( const char* itemName ) {
-	if ( !CanBuy() )
-		return;
+	//if ( !CanBuy() )
+	//	return;
 
 	int itemBuyImpulse = GetItemBuyImpulse( itemName );
 	PerformImpulse( itemBuyImpulse );
@@ -9687,9 +9771,9 @@ void idPlayer::RouteGuiMouse( idUserInterface *gui ) {
  	sysEvent_t ev;
  	const char *command;
 
-	if ( usercmd.mx != oldMouseX || usercmd.my != oldMouseY ) {
- 		ev = sys->GenerateMouseMoveEvent( usercmd.mx - oldMouseX, usercmd.my - oldMouseY );
- 		command = gui->HandleEvent( &ev, gameLocal.time );
+	if (usercmd.mx != oldMouseX || usercmd.my != oldMouseY) {
+		ev = sys->GenerateMouseMoveEvent(usercmd.mx - oldMouseX, usercmd.my - oldMouseY);
+		command = gui->HandleEvent(&ev, gameLocal.time);
 		oldMouseX = usercmd.mx;
 		oldMouseY = usercmd.my;
 	}
@@ -13566,7 +13650,7 @@ void idPlayer::SetPMCVars( void ) {
 idPlayer::GetSpawnClassname
 =====================
 */
-const char* idPlayer::GetSpawnClassname ( void ) {
+const char* idPlayer::GetSpawnClassname ( const char * num ) {
 	idEntity*	world;
 	const char*	entityFilter;
 	
@@ -13589,7 +13673,24 @@ const char* idPlayer::GetSpawnClassname ( void ) {
 		return world->spawnArgs.GetString( va("player_%s", entityFilter ), world->spawnArgs.GetString( "player", "player_marine" ) );
 	}
 	
-	return world->spawnArgs.GetString( "player", "player_marine" );
+	gameLocal.Printf("This is the num that is being passed into the game %s\n", num);
+
+	int number = atoi(num);
+	if (number == 0) {
+		gameLocal.Printf("I am a Gunslinger\n");
+		return world->spawnArgs.GetString("player", "player_gunslinger");
+	}
+	else if (number == 1) {
+		gameLocal.Printf("I am a Demo\n");
+		return world->spawnArgs.GetString("player", "player_demo");
+	}
+	else {
+		gameLocal.Printf("I am a Beserker\n");
+		return world->spawnArgs.GetString("player", "player_beserker");
+	}
+
+
+	return world->spawnArgs.GetString( "player", "player_strogg" );
 }
 
 /*

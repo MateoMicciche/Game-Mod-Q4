@@ -8366,7 +8366,7 @@ bool idPlayer::AttemptToBuyItem( const char* itemName )
 	const char* playerName = GetUserInfo()->GetString( "ui_name" );
 	common->DPrintf( "Player %s about to buy item %s; player has %d (%g) credits, cost is %d\n", playerName, itemName, (int)buyMenuCash, buyMenuCash, itemCost );
 
-	buyMenuCash -= (float)itemCost;
+	buyMenuCash -= itemCost;
 
 	common->DPrintf( "Player %s just bought item %s; player now has %d (%g) credits, cost was %d\n", playerName, itemName, (int)buyMenuCash, buyMenuCash, itemCost );
 

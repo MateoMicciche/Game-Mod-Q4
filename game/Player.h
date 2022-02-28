@@ -43,6 +43,7 @@ const int	CARRYOVER_FLAG_ARMOR_HEAVY	= 0x10000000;
 const int	CARRYOVER_WEAPONS_MASK		= 0x0FFFFFFF;
 const int	CARRYOVER_FLAGS_MASK		= 0xF0000000;
 
+const int	MAX_CLASSES					= 3;
 const int	MAX_SKILL_LEVELS			= 4;
 
 const int	ZERO_VOLUME					= -40;			// volume at zero
@@ -196,6 +197,7 @@ class idInventory {
 public:
 	int						maxHealth;
 	int						weapons;
+	int						dosh;
 // RITUAL BEGIN
 // squirrel: Mode-agnostic buymenus
 	int						carryOverWeapons;
@@ -230,6 +232,9 @@ public:
 	// save games
 	void					Save( idSaveGame *savefile ) const;					// archives object for save game file
 	void					Restore( idRestoreGame *savefile );					// unarchives object from save game file
+
+	int					    GetDosh();											// Gets dosh
+	void					SetDosh(int mulah);									// Sets dosh
 
 	void					Clear( void );
 	void					GivePowerUp( idPlayer* player, int powerup, int msec );
@@ -292,6 +297,7 @@ public:
 	int						godmodeDamage;
 	bool					undying;
 
+
 	bool					spawnAnglesSet;		// on first usercmd, we must set deltaAngles
 	idAngles				spawnAngles;
 	idAngles				viewAngles;			// player view angles
@@ -327,6 +333,8 @@ public:
 		bool		hearingLoss		:1;
 		bool		objectiveFailed	:1;
 		bool		noFallingDamage :1;
+		bool		traderOpen;
+		bool		isTraderOpened;
 	} pfl;
 		
 	// inventory
@@ -340,6 +348,7 @@ public:
 
  	idUserInterface *		hud;				// Common hud
 	idUserInterface *		mphud;				// hud overlay containing MP elements
+	idUserInterface*		trader;
 	
 	idUserInterface *		objectiveSystem;
 	idUserInterface *		cinematicHud;
@@ -441,9 +450,9 @@ public:
 	int					    GetXP();											// Gets player xp
 	void					SetXP(int experi);									// Sets player xp
 	void					CheckLevel();										// Checks players level and determines if the player gets perks
+	void					AssignPlayerClass(const char * num);				// Assigns player their class
 
-
-	static const char*		GetSpawnClassname ( void );
+	static const char*		GetSpawnClassname ( const char * num );
 
 	virtual void			Hide( void );
 	virtual void			Show( void );
@@ -510,6 +519,7 @@ public:
 	
 	void					DrawShadow( renderEntity_t *headRenderEnt );
 	void					DrawHUD( idUserInterface *hud );
+	void					DrawTrader(idPlayer* player);
 	void					StartRadioChatter ( void );
 	void					StopRadioChatter ( void );
 
@@ -646,6 +656,7 @@ public:
 #endif
 	void					UpdateHudStats( idUserInterface *hud );
  	void					UpdateHudAmmo( idUserInterface *hud );
+	void					UpdateTrader(idUserInterface *menu);
  	void					ShowTip( const char *title, const char *tip, bool autoHide );
  	void					HideTip( void );
  	bool					IsTipVisible( void ) { return tipUp; };

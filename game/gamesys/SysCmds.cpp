@@ -30,7 +30,7 @@
 #else
 #include "NoGameTypeInfo.h"
 #endif
-
+int cnt = 0;
 /*
 ==================
 Cmd_GetFloatArg
@@ -431,6 +431,15 @@ void GiveStuffToPlayer( idPlayer* player, const char* name, const char* value )
 					gameLocal.entities[ i ]->PostEventSec( &EV_Player_SelectWeapon, 0.5f, gameLocal.entities[ i ]->spawnArgs.GetString( "def_weapon1" ) );
 				}
 			}
+		}
+	}
+
+	if (give_all || idStr::Icmp(name, "ammorefill") == 0) {
+		for (i = 0; i < MAX_AMMOTYPES; i++) {
+			player->inventory.ammo[i] = player->inventory.MaxAmmoForAmmoClass(player, rvWeapon::GetAmmoNameForIndex(i));
+		}
+		if (!give_all) {
+			return;
 		}
 	}
 
@@ -2571,7 +2580,7 @@ static void Cmd_TestSave_f( const idCmdArgs &args ) {
 ==================
 Cmd_RecordViewNotes_f
 ==================
-*/
+
 static void Cmd_RecordViewNotes_f( const idCmdArgs &args ) {
 	idPlayer *player;
 	idVec3 origin;
@@ -2922,14 +2931,36 @@ void Cmd_AddIcon_f( const idCmdArgs& args ) {
 
 // RITUAL BEGIN
 // squirrel: Mode-agnostic buymenus
-void Cmd_ToggleBuyMenu_f( const idCmdArgs& args ) {
+void Cmd_ToggleBuyMenu_f(const idCmdArgs& args) {
 	idPlayer* player = gameLocal.GetLocalPlayer();
-	gameLocal.Printf("This command is being reached!!!!");
-	if ( player && true )									// player->CanBuy() replaced with true so buy command works.
+	gameLocal.Printf("This command is being reached!!!!\n");
+	if (cnt == 0) {
+		player->pfl.isTraderOpened = true;
+		gameLocal.SetIsFrozen(true);
+		cnt += 1;
+	}
+	else {
+		player->pfl.isTraderOpened = false;
+		gameLocal.SetIsFrozen(false);
+		cnt -= 1;
+	}
+	
+	/*
+	if ( player && player->CanBuy())
 	{
 		gameLocal.mpGame.OpenLocalBuyMenu();
 	}
+	*/
 }
+
+/*
+void Cmd_ChooseClass_f(const idCmdArgs& args) {
+	gameLocal.Printf("The number of the class chosen %s", args.Argv(1));
+	//gameLocal.SetPlayerClass(args.Argv(1));
+
+	//gameLoca.SetPlayerClass(args.Argv(1));
+}
+*/
 
 void Cmd_BuyItem_f( const idCmdArgs& args ) {
 	idPlayer* player = gameLocal.GetLocalPlayer();
@@ -3148,6 +3179,7 @@ void idGameLocal::InitConsoleCommands( void ) {
 	cmdSystem->AddCommand( "disasmScript",			Cmd_DisasmScript_f,			CMD_FL_GAME|CMD_FL_CHEAT,	"disassembles script" );
 // RAVEN BEGIN
 // rjohnson: removed old not taking system
+
 /*
 	cmdSystem->AddCommand( "recordViewNotes",		Cmd_RecordViewNotes_f,		CMD_FL_GAME|CMD_FL_CHEAT,	"record the current view position with notes" );
 	cmdSystem->AddCommand( "showViewNotes",			Cmd_ShowViewNotes_f,		CMD_FL_GAME|CMD_FL_CHEAT,	"show any view notes for the current map, successive calls will cycle to the next note" );
@@ -3232,6 +3264,7 @@ void idGameLocal::InitConsoleCommands( void ) {
 // squirrel: Mode-agnostic buymenus
 	cmdSystem->AddCommand( "buyMenu",				Cmd_ToggleBuyMenu_f,		CMD_FL_GAME,				"Toggle buy menu (if in a buy zone and the game type supports it)" );
 	cmdSystem->AddCommand( "buy",					Cmd_BuyItem_f,				CMD_FL_GAME,				"Buy an item (if in a buy zone and the game type supports it)" );
+//	cmdSystem->AddCommand( "chooseClass",			Cmd_ChooseClass_f,			CMD_FL_GAME,				"Gives player assigned class");
 // RITUAL END
 
 }
