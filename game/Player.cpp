@@ -1893,6 +1893,7 @@ void idPlayer::Spawn( void ) {
 
 		if ( hud ) {
 			hud->Activate( true, gameLocal.time );
+			hud->SetStateInt("player_level", lvl);
 		}
 
 		if ( mphud ) {
@@ -2731,6 +2732,7 @@ void idPlayer::CheckLevel()
 			else if (number == 1) {
 				gameLocal.Printf("Perk 10 for Demo Unlocked\n");
 				// No explosive damage
+
 			}
 			else {
 				gameLocal.Printf("Perk 10 for Beserker Unlocked\n");
@@ -2763,6 +2765,8 @@ void idPlayer::CheckLevel()
 		speedBoost += 10;
 		AdjustSpeed();
 	}
+	hud->SetStateInt("player_level", lvl);
+	//UpdateHud();
 }
 
 void idPlayer::AssignPlayerClass(const char * num)
@@ -3937,6 +3941,7 @@ void idPlayer::DrawTrader(idPlayer* player)
 		SetFocus(FOCUS_GUI, FOCUS_GUI_TIME, player, trader);
 		RouteGuiMouse(trader);
 		player->disableHud = true;
+		trader->SetStateInt("dosh", player->inventory.GetDosh());
 		UpdateTrader(trader);
 	}
 	else {

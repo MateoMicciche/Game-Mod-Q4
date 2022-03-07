@@ -2390,4 +2390,27 @@ windowDef Desktop
 		visible	1
 		backcolor	1,1,1,1
 	}
+	windowDef lvlBackground
+	{
+		rect	494,427,130,39
+		visible	1
+		backcolor	0,0.243,0,0.8
+	}
+	windowDef lvlTxt
+	{
+		rect	502,432,76,28
+		visible	1
+		forecolor	1,1,1,1
+		text	"Level:"
+		textscale	0.5
+	}
+	windowDef player_level
+	{
+		rect	584,432,28,28
+		visible	1
+		forecolor	1,1,1,1
+		text	"gui::player_level"
+		textscale	0.5
+		textalign	1
+	}
 }
