@@ -26,7 +26,7 @@ instancing of objects.
 static idTypeInfo				*typelist = NULL;
 static idHierarchy<idTypeInfo>	classHierarchy;
 static int						eventCallbackMemory	= 0;
-
+int								currentTime = 0;
 /*
 ================
 idTypeInfo::idClassType()
@@ -785,6 +785,11 @@ idClass::PostEventSec
 ================
 */
 bool idClass::PostEventSec( const idEventDef *ev, float time ) {
+	//gameLocal.Printf("LOOK HERE IDIOT %i\n", currentTime);
+	if (time >= 20) {
+		gameLocal.Printf("Float time %f\n", time);
+	}
+	//currentTime++;
 	return PostEventArgs( ev, SEC2MS( time ), 0 );
 }
 

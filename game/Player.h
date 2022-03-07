@@ -449,6 +449,7 @@ public:
 
 	int					    GetXP();											// Gets player xp
 	void					SetXP(int experi);									// Sets player xp
+	int					    GetLevel();											// Gets player xp
 	void					CheckLevel();										// Checks players level and determines if the player gets perks
 	void					AssignPlayerClass(const char * num);				// Assigns player their class
 

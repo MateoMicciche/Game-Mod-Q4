@@ -417,7 +417,9 @@ void rvSpawner::Think( void ){
 			nextSpawnTime = gameLocal.GetTime() + spawnDelay;
 		}
 
-		CheckSpawn ( );
+		//gameLocal.Printf("%i\n", gameLocal.GetTime());
+		CheckSpawn();
+
 	}
 }
 
@@ -439,11 +441,16 @@ void rvSpawner::CheckSpawn ( void ) {
 		return;
 	}
 
+	
+	/*
 	// Any left to spawn?
 	if ( maxToSpawn > -1 && numSpawned >= maxToSpawn ){
 		return;
 	}
-
+	*/
+	
+	//gameLocal.Printf("OH BB A TRIPLE\n");
+	//gameLocal.Printf("%i\n", numSpawned);
 	// Spawn in waves?
 	for ( count = 0; count < spawnWaves; count ++ ) {
 		// Too many active?
@@ -451,19 +458,25 @@ void rvSpawner::CheckSpawn ( void ) {
 			return;
 		}
 
+		// Are we at the limit now?
+		if (maxToSpawn > -1 && numSpawned >= maxToSpawn) {
+			//CallScriptEvents( "script_used_up", this );
+			//PostEventMS ( &EV_Remove, 0 );
+			break;
+		}
+
 		// Spawn a new entity
 		SpawnEnt ( );
 
-		// Are we at the limit now?
-		if ( maxToSpawn > -1 && numSpawned >= maxToSpawn ) {
-			CallScriptEvents( "script_used_up", this );
-			PostEventMS ( &EV_Remove, 0 );
-			break;
-		}
-	}
 
+	}
 	// Dont spawn again until after the delay
 	nextSpawnTime = gameLocal.time + spawnDelay;
+}
+
+void rvSpawner::SetSpawnWaves(int num)
+{
+	spawnWaves = num;
 }
 
 /*

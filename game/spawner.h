@@ -73,6 +73,9 @@ protected:
 
 	// Check to see if its time to spawn
 	void				CheckSpawn				( void );
+
+	// Check to see if its time to spawn
+	void				SetSpawnWaves(int num);
 	
 	// Spawn a new entity
 	bool				SpawnEnt				( void );

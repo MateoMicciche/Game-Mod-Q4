@@ -1024,6 +1024,7 @@ void idTrigger_Timer::Spawn( void ) {
 	onName = spawnArgs.GetString( "onName" );
 	offName = spawnArgs.GetString( "offName" );
 
+
 	if ( random >= wait && wait >= 0 ) {
 		random = wait - 0.001;
 		gameLocal.Warning( "idTrigger_Timer '%s' at (%s) has random >= wait", name.c_str(), GetPhysics()->GetOrigin().ToString(0) );

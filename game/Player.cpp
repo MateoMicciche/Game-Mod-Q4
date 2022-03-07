@@ -69,6 +69,9 @@ const int SPECTATE_RAISE = 25;
 int	xp=0;									    // Player XP
 int xpNeeded;									// Xp needed to level up
 int lvl=1;										// Player Level
+bool canRegen = false;
+bool canZoom = false;
+int speedBoost = 0;
 int dosh=0;										// Player currency, dropped from enemies
 const char * classNum;
 
@@ -914,7 +917,7 @@ bool idInventory::Give( idPlayer *owner, const idDict &spawnArgs, const char *st
 	else if (!idStr::Icmp(statname, "dosh")) {
 		dosh += 100;
 		gameLocal.Printf("I got dosh %i\n", dosh);
-		if (dosh > 4000) {
+		if (dosh > 999999) {
 			return false;
 		}
 	} else if ( !idStr::Icmp( statname, "health" ) ) {
@@ -2680,6 +2683,11 @@ void idPlayer::SetXP(int experi)
 	xp += experi;
 }
 
+int idPlayer::GetLevel()
+{
+	return lvl;
+}
+
 void idPlayer::CheckLevel()
 {
 	if (xp > xpNeeded) {
@@ -2688,14 +2696,72 @@ void idPlayer::CheckLevel()
 		gameLocal.Printf("Current Player level is now %i\n", lvl);
 		gameLocal.Printf("You now need %i to level again\n", xpNeeded);
 	}
+	idPlayer *player = gameLocal.GetLocalPlayer();
+	const char * playerClass = g_player_class.GetString();
+	int number = atoi(playerClass);
+
 
 	switch (lvl) {
-		case '5':
+		case 5:
+			if (number == 0) {
+				gameLocal.Printf("Perk 5 for Gunslinger Unlocked\n");
+				// Implemented in all Weapon.cpp related files (Weapons reload faster)
+				
+			}
+			else if (number == 1) {
+				gameLocal.Printf("Perk 5 for Demo Unlocked\n");
+
+			}
+			else {
+				gameLocal.Printf("Perk 5 for Beserker Unlocked\n");
+				// Shield becomes health
+				if (player->inventory.maxHealth == 225) {
+					break;
+				}
+				player->inventory.maxHealth = inventory.maxHealth + inventory.maxarmor;
+				player->inventory.maxarmor = 0;
+				health = player->inventory.maxHealth;
+			}
 			break;
-		case '10':
+		case 10:
+			if (number == 0) {
+				gameLocal.Printf("Perk 10 for Gunslinger Unlocked\n");
+				// Implemented in Actor.cpp (Player does 20% more damage to critical areas (headshots))
+			}
+			else if (number == 1) {
+				gameLocal.Printf("Perk 10 for Demo Unlocked\n");
+				// No explosive damage
+			}
+			else {
+				gameLocal.Printf("Perk 10 for Beserker Unlocked\n");
+				// Every kill the player regens 5 health
+				canRegen = true;
+			}
 			break;
-		case '15':
+		case 15:
+			if (number == 0) {
+				gameLocal.Printf("Perk 15 for Gunslinger Unlocked\n");
+				// For each kill, increase speed up to 400
+				canZoom = true;
+			}
+			else if (number == 1) {
+				gameLocal.Printf("Perk 15 for Demo Unlocked\n");
+				// Implemented in WeaponRockerLauncher.cpp (Shoot a spread of rockets)
+				// GrenadeLaucherLauncher does it too
+			}
+			else {
+				gameLocal.Printf("Perk 15 for Beserker Unlocked\n");
+				// Implememted in Damage (Damage by enemies reduced by 40%)
+			}
 			break;
+	}
+
+	if (canRegen == true && lvl >= 10) {
+		health += 5;
+	}
+	if (canZoom && lvl >= 15) {
+		speedBoost += 10;
+		AdjustSpeed();
 	}
 }
 
@@ -8875,7 +8941,19 @@ void idPlayer::AdjustSpeed( void ) {
 		speed *= 0.33f;
 	}
 
-	physicsObj.SetSpeed( speed, pm_crouchspeed.GetFloat() );
+	const char* playerClass = g_player_class.GetString();
+	int number = atoi(playerClass);
+	if (number == 0 && lvl >= 1) {
+		if (speed + speedBoost >= 350) {
+			physicsObj.SetSpeed(350, pm_crouchspeed.GetFloat());
+		}
+		else {
+			physicsObj.SetSpeed(speed + speedBoost, pm_crouchspeed.GetFloat());
+		}
+	}
+	else {
+		physicsObj.SetSpeed(speed, pm_crouchspeed.GetFloat());
+	}
 }
 
 /*
@@ -10112,7 +10190,14 @@ void idPlayer::CalcDamagePoints( idEntity *inflictor, idEntity *attacker, const 
 
 	damage = ceil(damageScale*(float)damage);
 
-	pDmgScale = damageDef->GetFloat( "playerScale", "1" );
+	const char* playerClass = g_player_class.GetString();
+	int number = atoi(playerClass);
+	if (number == 2 && lvl == 15) {
+		pDmgScale = 0.6;
+	}
+	else {
+		pDmgScale = damageDef->GetFloat("playerScale", "1");
+	}
 	damage = ceil(pDmgScale*(float)damage);
 
 	// check for completely getting out of the damage

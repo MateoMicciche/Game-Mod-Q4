@@ -732,7 +732,7 @@ entityDef player_marine
 	"ammo_railgun"						"0"
 	"ammo_machinegun"					"0"
 	"ammo_nailgun"						"0"
-	"ammo_blaster"						"-1"
+	"ammo_blaster"						"0"
 	"ammo_shotgun"						"0"
 	"ammo_hyperblaster"					"0"
 	"ammo_rocketlauncher"					"0"
@@ -740,7 +740,7 @@ entityDef player_marine
 	"ammo_lightninggun"					"0"
 	"ammo_none"						"-1"
 
-	"max_ammo_blaster"					"-1"
+	"max_ammo_blaster"					"30"
 	"max_ammo_railgun"					"50"
 	"max_ammo_machinegun"					"300"
 	"max_ammo_nailgun"					"300"
@@ -830,23 +830,23 @@ entityDef player_strogg
 entityDef player_gunslinger
 {
 	"inherit"							"player_marine"
-	"pm_speed"							"230"
+	"pm_speed"							"250"
 	// stats
 	"health"							"75"
 	"maxhealth"							"75"
 	"armor"								"0"
-	"maxarmor"							"100"
+	"maxarmor"							"50"
 }
 
 entityDef player_demo
 {
 	"inherit"							"player_marine"
-	"pm_speed"							"160"
+	"pm_speed"							"190"
 	// stats
 	"health"							"125"
 	"maxhealth"							"125"
 	"armor"								"0"
-	"maxarmor"							"50"
+	"maxarmor"							"75"
 }
 
 entityDef player_beserker
@@ -855,9 +855,9 @@ entityDef player_beserker
 	"pm_speed"							"160"
 	// stats
 	"health"							"150"
-	"maxhealth"							"125"
+	"maxhealth"							"150"
 	"armor"								"0"
-	"maxarmor"							"50"
+	"maxarmor"							"75"
 }
 
 /*
@@ -1114,7 +1114,7 @@ entityDef player_marine_mp
 	"ammo_railgun"			"0"
 	"ammo_machinegun"		"100"
 	"ammo_nailgun"			"0"
-	"ammo_blaster"			"-1"
+	"ammo_blaster"			"0"
 	"ammo_shotgun"			"0"
 	"ammo_hyperblaster"		"0"
 	"ammo_rocketlauncher"		"0"

@@ -81,5 +81,27 @@ windowDef Desktop
 			}
 
 		}
+		windowDef btn_Ammo
+		{
+			rect	52,293,209,44
+			visible	1
+
+			onAction {
+				consoleCMD "buy ammorefill" ;
+				
+			}
+
+		}
+		windowDef btn_Armor
+		{
+			rect	52,346,210,41
+			visible	1
+
+			onAction {
+				consoleCMD "buy item_armor_large" ;
+				
+			}
+
+		}
 	}
 }

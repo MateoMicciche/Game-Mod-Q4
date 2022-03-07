@@ -203,6 +203,9 @@ stateResult_t rvWeaponShotgun::State_Reload ( const stateParms_t& parms ) {
 		STAGE_RELOADDONE,
 		STAGE_RELOADDONEWAIT
 	};	
+	idPlayer* player = gameLocal.GetLocalPlayer();
+	const char* playerClass = g_player_class.GetString();
+	int number = atoi(playerClass);
 	switch ( parms.stage ) {
 		case STAGE_INIT:
 			if ( wsfl.netReload ) {
@@ -247,7 +250,12 @@ stateResult_t rvWeaponShotgun::State_Reload ( const stateParms_t& parms ) {
 			if ( (wsfl.attack && AmmoInClip() ) || AmmoAvailable ( ) <= AmmoInClip ( ) || AmmoInClip() == ClipSize() ) {
 				return SRESULT_STAGE ( STAGE_RELOADDONE );
 			}
-			PlayAnim ( ANIMCHANNEL_ALL, "reload_loop", 0 );
+			if (number == 0 && player->GetLevel() >= 1) {
+				PlayAnim(ANIMCHANNEL_ALL, "reload_loop1", 0);
+			}
+			else {
+				PlayAnim(ANIMCHANNEL_ALL, "reload_loop", 0);
+			}
 			return SRESULT_STAGE ( STAGE_RELOADLOOPWAIT );
 			
 		case STAGE_RELOADLOOPWAIT:

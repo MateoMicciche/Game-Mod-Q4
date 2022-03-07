@@ -2068,7 +2068,8 @@ bool idGameLocal::InitFromSaveGame( const char *mapName, idRenderWorld *renderWo
 // RAVEN BEGIN
 // bdube: changed so we actually cache stuff
 	gameLocal.Printf("This is the typeClass value before passing %s", typeClass);
-	FindEntityDef( idPlayer::GetSpawnClassname("1"));
+	typeClass = g_player_class.GetString();
+	FindEntityDef( idPlayer::GetSpawnClassname(typeClass));
 
 // abahr: saving clientEntities
 	for( i = 0; i < MAX_CENTITIES; i++ ) {

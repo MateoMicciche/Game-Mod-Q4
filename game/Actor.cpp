@@ -2811,6 +2811,19 @@ int idActor::GetDamageForLocation( int damage, int location ) {
 	if ( ( location < 0 ) || ( location >= damageScale.Num() ) ) {
 		return damage;
 	}
+	gameLocal.Printf("LOCATION: %i\n", location);
+	gameLocal.Printf("DAMAGE: %i\n", damage);
+	gameLocal.Printf("SCALED DAMAGE: %f\n", damageScale[location]);
+	idPlayer* player = gameLocal.GetLocalPlayer();
+	const char* playerClass = g_player_class.GetString();
+	int number = atoi(playerClass);
+
+	if (number == 0 && player->GetLevel() >= 3) {
+		if (location == 32) {
+			return (int)ceil(damage * (1.2*damageScale[location]));
+		}
+
+	}
 
 	return (int)ceil( damage * damageScale[ location ] );
 }
