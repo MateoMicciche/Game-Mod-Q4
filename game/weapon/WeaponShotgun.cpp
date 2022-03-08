@@ -250,7 +250,7 @@ stateResult_t rvWeaponShotgun::State_Reload ( const stateParms_t& parms ) {
 			if ( (wsfl.attack && AmmoInClip() ) || AmmoAvailable ( ) <= AmmoInClip ( ) || AmmoInClip() == ClipSize() ) {
 				return SRESULT_STAGE ( STAGE_RELOADDONE );
 			}
-			if (number == 0 && player->GetLevel() >= 1) {
+			if (number == 0 && player->GetLevel() >= 5) {
 				PlayAnim(ANIMCHANNEL_ALL, "reload_loop1", 0);
 			}
 			else {

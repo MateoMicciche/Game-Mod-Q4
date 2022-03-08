@@ -730,7 +730,10 @@ stateResult_t rvWeaponNailgun::State_Reload ( const stateParms_t& parms ) {
 		STAGE_RELOADRIGHTWAIT,
 		STAGE_RELOADDONE,
 		STAGE_RELOADDONEWAIT,		
-	};	
+	};
+	idPlayer* player = gameLocal.GetLocalPlayer();
+	const char* playerClass = g_player_class.GetString();
+	int number = atoi(playerClass);
 	switch ( parms.stage ) {
 		case STAGE_INIT:
 			if ( DrumSpin ( NAILGUN_DRUMSPEED_STOPPED, parms.blendFrames ) ) {
@@ -752,7 +755,12 @@ stateResult_t rvWeaponNailgun::State_Reload ( const stateParms_t& parms ) {
 			return SRESULT_STAGE( STAGE_RELOAD );
 			
 		case STAGE_RELOAD:
-			PlayAnim( ANIMCHANNEL_LEGS, "reload", parms.blendFrames );
+			if (number == 0 && player->GetLevel() >= 5) {
+				PlayAnim(ANIMCHANNEL_ALL, "reload1", parms.blendFrames);
+			}
+			else {
+				PlayAnim(ANIMCHANNEL_ALL, "reload", parms.blendFrames);
+			}
 			return SRESULT_STAGE( STAGE_RELOADWAIT );
 			
 		case STAGE_RELOADWAIT:

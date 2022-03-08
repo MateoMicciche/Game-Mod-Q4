@@ -5730,6 +5730,21 @@ void idGameLocal::RadiusDamage( const idVec3 &origin, idEntity *inflictor, idEnt
 		radius = 1;
 	}
 
+	// Increase radius of grenade and rocket explosions
+	idPlayer* player = gameLocal.GetLocalPlayer();
+	const char* playerClass = g_player_class.GetString();
+	int number = atoi(playerClass);
+	if (number == 1 && player->GetLevel() >= 10) {
+		if (0 == strcmp(damageDefName, "damage_rocketSplash") || 0 == strcmp(damageDefName, "damage_grenadeSplash")) {
+				radius *= 1.5;
+		}
+	}
+	//else if (radius == 180) {
+	//	gameLocal.Printf("HEY ITS WORKING POGGERS\n");
+	//	gameLocal.Printf("%s\n", damageDefName);
+	//	radius *= 2;
+	//}
+
 
 // ddynerman: multiple clip worlds
 	numListedClipModels = ClipModelsTouchingBounds( inflictor, idBounds(origin).Expand(radius), MASK_ALL, clipModelList, MAX_GENTITIES );

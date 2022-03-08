@@ -448,9 +448,14 @@ stateResult_t rvWeaponRocketLauncher::State_Fire ( const stateParms_t& parms ) {
 	int number = atoi(playerClass);
 	switch ( parms.stage ) {
 		case STAGE_INIT:
-			nextAttackTime = gameLocal.time + (fireRate * owner->PowerUpModifier ( PMOD_FIRERATE ));	
-			if (number == 1 && player->GetLevel() == 5) {
-				Attack ( false, 5, 5, 0, 1.0f );
+			if (number == 0 && player->GetLevel() >= 5) {
+				nextAttackTime = gameLocal.time + ((fireRate/2.0) * owner->PowerUpModifier(PMOD_FIRERATE));
+			}
+			else {
+				nextAttackTime = gameLocal.time + (fireRate * owner->PowerUpModifier(PMOD_FIRERATE));
+			}
+			if (number == 1 && player->GetLevel() >= 15) {
+				Attack ( false, 5, 7, 0, 1.0f );
 			}
 			else {
 				Attack(false, 1, spread, 0, 1.0f);
@@ -528,7 +533,9 @@ stateResult_t rvWeaponRocketLauncher::State_Rocket_Reload ( const stateParms_t& 
 		STAGE_INIT,
 		STAGE_WAIT,
 	};	
-	
+	idPlayer* player = gameLocal.GetLocalPlayer();
+	const char* playerClass = g_player_class.GetString();
+	int number = atoi(playerClass);
 	switch ( parms.stage ) {
 		case STAGE_INIT: {
 			const char* animName;
@@ -546,8 +553,13 @@ stateResult_t rvWeaponRocketLauncher::State_Rocket_Reload ( const stateParms_t& 
 			animNum = viewModel->GetAnimator()->GetAnim ( animName );
 			if ( animNum ) {
 				idAnim* anim;
-				anim = (idAnim*)viewModel->GetAnimator()->GetAnim ( animNum );				
-				anim->SetPlaybackRate ( (float)anim->Length() / (reloadRate * owner->PowerUpModifier ( PMOD_FIRERATE )) );
+				anim = (idAnim*)viewModel->GetAnimator()->GetAnim ( animNum );
+				if (number == 0 && player->GetLevel() >= 5) {
+					anim->SetPlaybackRate((float)anim->Length() / ((reloadRate/2) * owner->PowerUpModifier(PMOD_FIRERATE)));
+				}
+				else {
+					anim->SetPlaybackRate((float)anim->Length() / (reloadRate * owner->PowerUpModifier(PMOD_FIRERATE)));
+				}
 			}
 
 			PlayAnim( ANIMCHANNEL_TORSO, animName, parms.blendFrames );				

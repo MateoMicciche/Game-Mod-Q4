@@ -71,6 +71,7 @@ int xpNeeded;									// Xp needed to level up
 int lvl=1;										// Player Level
 bool canRegen = false;
 bool canZoom = false;
+bool canBoom = true;
 int speedBoost = 0;
 int dosh=0;										// Player currency, dropped from enemies
 const char * classNum;
@@ -2701,7 +2702,7 @@ void idPlayer::CheckLevel()
 	const char * playerClass = g_player_class.GetString();
 	int number = atoi(playerClass);
 
-
+	// Carries out perk unlocks/explains where perks were implemented
 	switch (lvl) {
 		case 5:
 			if (number == 0) {
@@ -2711,7 +2712,8 @@ void idPlayer::CheckLevel()
 			}
 			else if (number == 1) {
 				gameLocal.Printf("Perk 5 for Demo Unlocked\n");
-
+				// Implemented in Damage() in Player.cpp (No explosive damage)
+				canBoom = false;
 			}
 			else {
 				gameLocal.Printf("Perk 5 for Beserker Unlocked\n");
@@ -2731,8 +2733,7 @@ void idPlayer::CheckLevel()
 			}
 			else if (number == 1) {
 				gameLocal.Printf("Perk 10 for Demo Unlocked\n");
-				// No explosive damage
-
+				// Implemented in Gamelocal.cpp (Radius for explosive weapons increased by 50%)
 			}
 			else {
 				gameLocal.Printf("Perk 10 for Beserker Unlocked\n");
@@ -2743,13 +2744,13 @@ void idPlayer::CheckLevel()
 		case 15:
 			if (number == 0) {
 				gameLocal.Printf("Perk 15 for Gunslinger Unlocked\n");
-				// For each kill, increase speed up to 400
+				// For each kill, increase speed up to 350
 				canZoom = true;
 			}
 			else if (number == 1) {
 				gameLocal.Printf("Perk 15 for Demo Unlocked\n");
-				// Implemented in WeaponRockerLauncher.cpp (Shoot a spread of rockets)
-				// GrenadeLaucherLauncher does it too
+				// Implemented in WeaponRocketLauncher.cpp (Shoot a spread of rockets)
+				// GrenadeLaucherLauncher does it too (Shoot spread of nades)
 			}
 			else {
 				gameLocal.Printf("Perk 15 for Beserker Unlocked\n");
@@ -8323,6 +8324,14 @@ int idPlayer::GetItemCost( const char* itemName ) {
 	idDict traderCosts;													// traderCosts for determining how much an item is worth
 	traderCosts.Set("weapon_shotgun", "200");
 	traderCosts.Set("weapon_machinegun", "400");
+	traderCosts.Set("weapon_hyperblaster", "100");
+	traderCosts.Set("weapon_grenadelauncher", "100");
+	traderCosts.Set("weapon_rocketlauncher", "100");
+	traderCosts.Set("weapon_railgun", "100");
+	traderCosts.Set("weapon_nailgun", "100");
+	traderCosts.Set("weapon_lightninggun", "100");
+	traderCosts.Set("weapon_dmg", "100");
+	traderCosts.Set("item_health_large", "100");
 	traderCosts.Set("ammorefill", "100");
 	traderCosts.Set("item_armor_small", "150");
 	traderCosts.Set("item_armor_large", "300");
@@ -8356,14 +8365,14 @@ int GetItemBuyImpulse( const char* itemName )
 		{ "weapon_lightninggun",			IMPULSE_107, },
 		//									IMPULSE_108 - Unused
 		{ "weapon_napalmgun",				IMPULSE_109, },
-		//		{ "weapon_dmg",						IMPULSE_110, },
+		{ "weapon_dmg",						IMPULSE_110, },
 		//									IMPULSE_111 - Unused
 		//									IMPULSE_112 - Unused
 		//									IMPULSE_113 - Unused
 		//									IMPULSE_114 - Unused
 		//									IMPULSE_115 - Unused
 		//									IMPULSE_116 - Unused
-		//									IMPULSE_117 - Unused
+		{ "item_health_large",				IMPULSE_117, },
 		{ "item_armor_small",				IMPULSE_118, },
 		{ "item_armor_large",				IMPULSE_119, },
 		{ "ammorefill",						IMPULSE_120, },
@@ -8768,14 +8777,14 @@ void idPlayer::PerformImpulse( int impulse ) {
 		case IMPULSE_107:	AttemptToBuyItem( "weapon_lightninggun" );			break;
 		case IMPULSE_108:	break; // Unused
 		case IMPULSE_109:	AttemptToBuyItem( "weapon_napalmgun" );				break;
-		case IMPULSE_110:	/* AttemptToBuyItem( "weapon_dmg" );*/				break;
+		case IMPULSE_110:	AttemptToBuyItem( "weapon_dmg" );					break;
 		case IMPULSE_111:	break; // Unused
 		case IMPULSE_112:	break; // Unused
 		case IMPULSE_113:	break; // Unused
 		case IMPULSE_114:	break; // Unused
 		case IMPULSE_115:	break; // Unused
 		case IMPULSE_116:	break; // Unused
-		case IMPULSE_117:	break; // Unused
+		case IMPULSE_117:	AttemptToBuyItem( "item_health_large" );				break;
 		case IMPULSE_118:	AttemptToBuyItem( "item_armor_small" );				break;
 		case IMPULSE_119:	AttemptToBuyItem( "item_armor_large" );				break;
 		case IMPULSE_120:	AttemptToBuyItem( "ammorefill" );					break;
@@ -10286,6 +10295,13 @@ void idPlayer::Damage( idEntity *inflictor, idEntity *attacker, const idVec3 &di
 	}
 	// RAVEN END
 
+	//gameLocal.Printf("WHAT HURT ME %s\n", damageDefName);
+
+	if (!canBoom) {
+		if (0 == strcmp(damageDefName, "damage_rocketSplash") || 0 == strcmp(damageDefName, "damage_grenadeSplash")) {
+			return;
+		}
+	}
 
 	if ( forwardDamageEnt.IsValid() ) {
 		forwardDamageEnt->Damage( inflictor, attacker, dir, damageDefName, modifiedDamageScale, location );
@@ -13764,7 +13780,7 @@ const char* idPlayer::GetSpawnClassname ( const char * num ) {
 	}
 	
 	gameLocal.Printf("This is the num that is being passed into the game %s\n", num);
-
+	lvl = 1;
 	int number = atoi(num);
 	if (number == 0) {
 		gameLocal.Printf("I am a Gunslinger\n");

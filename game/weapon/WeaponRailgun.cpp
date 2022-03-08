@@ -219,7 +219,10 @@ stateResult_t rvWeaponRailgun::State_Reload ( const stateParms_t& parms ) {
 	enum {
 		STAGE_INIT,
 		STAGE_WAIT,
-	};	
+	};
+	idPlayer* player = gameLocal.GetLocalPlayer();
+	const char* playerClass = g_player_class.GetString();
+	int number = atoi(playerClass);
 	switch ( parms.stage ) {
 		case STAGE_INIT:
 			if ( wsfl.netReload ) {
@@ -229,7 +232,12 @@ stateResult_t rvWeaponRailgun::State_Reload ( const stateParms_t& parms ) {
 			}
 						
 			SetStatus ( WP_RELOAD );
-			PlayAnim ( ANIMCHANNEL_ALL, "reload", parms.blendFrames );
+			if (number == 0 && player->GetLevel() >= 5) {
+				PlayAnim(ANIMCHANNEL_ALL, "reload1", parms.blendFrames);
+			}
+			else {
+				PlayAnim(ANIMCHANNEL_ALL, "reload", parms.blendFrames);
+			}
 			return SRESULT_STAGE ( STAGE_WAIT );
 			
 		case STAGE_WAIT:

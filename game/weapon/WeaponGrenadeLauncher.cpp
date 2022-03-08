@@ -141,11 +141,19 @@ stateResult_t rvWeaponGrenadeLauncher::State_Fire ( const stateParms_t& parms ) 
 	enum {
 		STAGE_INIT,
 		STAGE_WAIT,
-	};	
+	};
+	idPlayer* player = gameLocal.GetLocalPlayer();
+	const char* playerClass = g_player_class.GetString();
+	int number = atoi(playerClass);
 	switch ( parms.stage ) {
 		case STAGE_INIT:
 			nextAttackTime = gameLocal.time + (fireRate * owner->PowerUpModifier ( PMOD_FIRERATE ));
-			Attack ( false, 1, spread, 0, 1.0f );
+			if (number == 1 && player->GetLevel() >= 15) {
+				Attack(false, 5, 7, 0, 1.0f);
+			}
+			else {
+				Attack(false, 1, spread, 0, 1.0f);
+			}
 			PlayAnim ( ANIMCHANNEL_ALL, GetFireAnim(), 0 );	
 			return SRESULT_STAGE ( STAGE_WAIT );
 	
@@ -172,7 +180,10 @@ stateResult_t rvWeaponGrenadeLauncher::State_Reload ( const stateParms_t& parms 
 	enum {
 		STAGE_INIT,
 		STAGE_WAIT,
-	};	
+	};
+	idPlayer* player = gameLocal.GetLocalPlayer();
+	const char* playerClass = g_player_class.GetString();
+	int number = atoi(playerClass);
 	switch ( parms.stage ) {
 		case STAGE_INIT:
 			if ( wsfl.netReload ) {
@@ -182,7 +193,12 @@ stateResult_t rvWeaponGrenadeLauncher::State_Reload ( const stateParms_t& parms 
 			}
 			
 			SetStatus ( WP_RELOAD );
-			PlayAnim ( ANIMCHANNEL_ALL, "reload", parms.blendFrames );
+			if (number == 0 && player->GetLevel() >= 5) {
+				PlayAnim(ANIMCHANNEL_ALL, "reload1", parms.blendFrames);
+			}
+			else {
+				PlayAnim(ANIMCHANNEL_ALL, "reload", parms.blendFrames);
+			}
 			return SRESULT_STAGE ( STAGE_WAIT );
 			
 		case STAGE_WAIT:
