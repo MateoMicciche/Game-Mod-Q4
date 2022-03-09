@@ -208,6 +208,13 @@ model weapon_hyperblaster_view
 		frame 21				sound_item		weapon_hyperblaster_cell_in
 		frame 34				sound_weapon	weapon_hyperblaster_close
 	}
+	anim gunslinger 			models/weapons/hyperblaster/reload.md5anim	
+	{
+		rate 2.0
+		frame 1					sound_weapon	weapon_hyperblaster_cell_out
+		frame 21				sound_item		weapon_hyperblaster_cell_in
+		frame 34				sound_weapon	weapon_hyperblaster_close
+	}
 	anim raise					models/weapons/hyperblaster/raise.md5anim
 	anim putaway				models/weapons/hyperblaster/lower.md5anim
 	{

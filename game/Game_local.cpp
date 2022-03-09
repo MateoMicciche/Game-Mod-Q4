@@ -2067,7 +2067,7 @@ bool idGameLocal::InitFromSaveGame( const char *mapName, idRenderWorld *renderWo
 	// Precache the player
 // RAVEN BEGIN
 // bdube: changed so we actually cache stuff
-	gameLocal.Printf("This is the typeClass value before passing %s", typeClass);
+	//gameLocal.Printf("This is the typeClass value before passing %s", typeClass);
 	typeClass = g_player_class.GetString();
 	FindEntityDef( idPlayer::GetSpawnClassname(typeClass));
 
@@ -2926,7 +2926,7 @@ void idGameLocal::SpawnPlayer( int clientNum ) {
 // RAVEN BEGIN
 // bdube: changed marine class
 	typeClass = g_player_class.GetString();
-	gameLocal.Printf("This is the typeClass value before passing a second time %s\n", typeClass);
+	//gameLocal.Printf("This is the typeClass value before passing a second time %s\n", typeClass);
 	args.Set( "classname", idPlayer::GetSpawnClassname(typeClass) );
 // RAVEN END
 	
@@ -5730,6 +5730,7 @@ void idGameLocal::RadiusDamage( const idVec3 &origin, idEntity *inflictor, idEnt
 		radius = 1;
 	}
 
+	// Perk 2 Demo
 	// Increase radius of grenade and rocket explosions
 	idPlayer* player = gameLocal.GetLocalPlayer();
 	const char* playerClass = g_player_class.GetString();

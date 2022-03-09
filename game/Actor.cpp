@@ -2814,6 +2814,8 @@ int idActor::GetDamageForLocation( int damage, int location ) {
 	//gameLocal.Printf("LOCATION: %i\n", location);
 	//gameLocal.Printf("DAMAGE: %i\n", damage);
 	//gameLocal.Printf("SCALED DAMAGE: %f\n", damageScale[location]);
+
+	// Perk 2 Gunslinger
 	idPlayer* player = gameLocal.GetLocalPlayer();
 	const char* playerClass = g_player_class.GetString();
 	int number = atoi(playerClass);

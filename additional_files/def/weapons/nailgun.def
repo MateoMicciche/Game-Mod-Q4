@@ -275,6 +275,17 @@ model weapon_nailgun_view
 		frame 26				guievent		nailgun_clipin
 		frame 39				sound_weapon	weapon_nailgun_handle
 	}
+	anim gunslinger					models/weapons/nailgun/reload.md5anim
+	{
+		rate 2.0
+		frame 12				sound_weapon	weapon_nailgun_clipout
+		frame 14				object_call		ClaspOpen
+		frame 23				guievent		nailgun_clipout
+		frame 26				sound_item		weapon_nailgun_clipin
+		frame 28				object_call		ClaspClose
+		frame 26				guievent		nailgun_clipin
+		frame 39				sound_weapon	weapon_nailgun_handle
+	}
 	anim reload_clip1hold		models/weapons/nailgun/reload_clip1_hold.md5anim
 	{
 		frame 7					sound_weapon	weapon_nailgun_clipout

@@ -448,12 +448,14 @@ stateResult_t rvWeaponRocketLauncher::State_Fire ( const stateParms_t& parms ) {
 	int number = atoi(playerClass);
 	switch ( parms.stage ) {
 		case STAGE_INIT:
+
 			if (number == 0 && player->GetLevel() >= 5) {
 				nextAttackTime = gameLocal.time + ((fireRate/2.0) * owner->PowerUpModifier(PMOD_FIRERATE));
 			}
 			else {
 				nextAttackTime = gameLocal.time + (fireRate * owner->PowerUpModifier(PMOD_FIRERATE));
 			}
+
 			if (number == 1 && player->GetLevel() >= 15) {
 				Attack ( false, 5, 7, 0, 1.0f );
 			}

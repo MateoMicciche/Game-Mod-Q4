@@ -308,6 +308,13 @@ model weapon_machinegun_view
 		frame 16				sound_item				weapon_machinegun_clipin
 		frame 26				sound_weapon			snd_bolt
 	}
+	anim gunslinger				models/weapons/machinegun/reload.md5anim
+	{
+		frame 6					sound_weapon			weapon_machinegun_clipout
+		frame 16				sound_item				weapon_machinegun_clipin
+		frame 26				sound_weapon			snd_bolt
+		rate 2.0
+	}
 	anim flashlight				models/weapons/machinegun/flashlight.md5anim
 	{
 		frame 7					sound_weapon			weapon_blaster_flashlight

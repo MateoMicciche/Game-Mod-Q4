@@ -2971,6 +2971,17 @@ void Cmd_BuyItem_f( const idCmdArgs& args ) {
 
 	player->GenerateImpulseForBuyAttempt( args.Argv(1) );
 }
+
+void Cmd_SetLevel_f(const idCmdArgs& args) {
+	if (args.Argc() <= 1) {
+		gameLocal.Printf("You are missing the argument");
+	}
+	idPlayer* player = gameLocal.GetLocalPlayer();
+	int level = atoi(args.Argv(1));
+	player->SetLevel(level);
+	player->hud->SetStateInt("player_level", level);
+	player->CheckLevel();
+}
 // RITUAL END
 
 void Cmd_PlayerEmote_f( const idCmdArgs& args ) {
@@ -3264,6 +3275,7 @@ void idGameLocal::InitConsoleCommands( void ) {
 // squirrel: Mode-agnostic buymenus
 	cmdSystem->AddCommand( "buyMenu",				Cmd_ToggleBuyMenu_f,		CMD_FL_GAME,				"Toggle buy menu (if in a buy zone and the game type supports it)" );
 	cmdSystem->AddCommand( "buy",					Cmd_BuyItem_f,				CMD_FL_GAME,				"Buy an item (if in a buy zone and the game type supports it)" );
+	cmdSystem->AddCommand( "setLevel",				Cmd_SetLevel_f,				CMD_FL_GAME,				"Sets players xp");
 //	cmdSystem->AddCommand( "chooseClass",			Cmd_ChooseClass_f,			CMD_FL_GAME,				"Gives player assigned class");
 // RITUAL END
 

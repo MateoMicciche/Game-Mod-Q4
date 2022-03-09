@@ -247,6 +247,13 @@ model weapon_railgun_view
 		frame 35				sound				 weapon_railgun_clipout
 		frame 43				sound				 weapon_railgun_smallcharge
 	}
+	anim gunslinger				models/weapons/railgun/reload.md5anim
+	{
+		rate		  3.2
+		frame 20				sound				 weapon_railgun_clipin
+		frame 35				sound				 weapon_railgun_clipout
+		frame 43				sound				 weapon_railgun_smallcharge
+	}
 }
 
 model weapon_railgun_view_mp

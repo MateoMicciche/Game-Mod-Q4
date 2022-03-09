@@ -205,6 +205,12 @@ model weapon_grenadelauncher_view
 	{
 		frame 2					sound_weapon	player_grenadelauncher_clipout
 		frame 25				sound_weapon	player_grenadelauncher_clipin
+	}
+	anim gunslinger				models/weapons/grenadelauncher/reload.md5anim
+	{
+		frame 2					sound_weapon	player_grenadelauncher_clipout
+		frame 25				sound_weapon	player_grenadelauncher_clipin
+		rate 2.0
 	}	
 }
 

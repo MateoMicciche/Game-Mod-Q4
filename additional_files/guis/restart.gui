@@ -15,6 +15,7 @@ windowDef Desktop
 			set "cmd" "play main_menu_selection" ;
 		}
 	}
+
 	windowDef msg_black
 	{
 		rect	0,0,640,480
@@ -116,7 +117,7 @@ windowDef Desktop
 		textalignx	22
 
 		onAction {
-			set cmd "restart" ;
+			set	"cmd"	"disconnect mainmenu fromRestart_toSurvival";
 			
 			set "cmd" "play main_menu_selection" ;
 		}

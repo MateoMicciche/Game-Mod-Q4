@@ -194,7 +194,7 @@ stateResult_t rvWeaponGrenadeLauncher::State_Reload ( const stateParms_t& parms 
 			
 			SetStatus ( WP_RELOAD );
 			if (number == 0 && player->GetLevel() >= 5) {
-				PlayAnim(ANIMCHANNEL_ALL, "reload1", parms.blendFrames);
+				PlayAnim(ANIMCHANNEL_ALL, "gunslinger", parms.blendFrames);
 			}
 			else {
 				PlayAnim(ANIMCHANNEL_ALL, "reload", parms.blendFrames);

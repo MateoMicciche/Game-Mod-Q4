@@ -38,7 +38,7 @@ windowDef Desktop
 	float	"loaddefaults"	0
 	float	"com_machineSpec"	0
 	float	"skill"	1
-	float	"tooltip_x"	0
+	float	"class"	0
 	float	"tooltip_y"	0
 	float	"tooltip_w"	0
 	float	"tooltip_h"	0
@@ -491,8 +491,8 @@ windowDef Desktop
 			set "main_b5_corner::matcolor_w" "0" ; 
 			set "main_t_b6::forecolor_w" "0" ; 
 			set "main_b6_corner::matcolor_w" "0" ; 
-			set "main_t_b7::forecolor_w" "0" ; 
-			set "main_b7_corner::matcolor_w" "0" ;
+			set "main_t_b7::forecolor_w" "0.4" ; 
+			set "main_b7_corner::matcolor_w" "0.8" ;
 			set "main_b9::matcolor_w" "0.4" ; 
 			set "main_t_b9::forecolor_w" "0.8" ; 
 			set "main_b9_corner::matcolor_w" "0.4" ; 
@@ -506,7 +506,7 @@ windowDef Desktop
 			set "main_b_return::visible" "1" ;
 			set "main_b_mods::visible" "0" ;
 			set "main_b_updates::visible" "0" ;
-			set "main_b_credits::visible" "0" ;			
+			set "main_b_credits::visible" "1" ;			
 			set "main_b_loadgame::visible" "1" ;
 			set "main_b_settings::visible" "1" ;
 			set "main_b_exit::visible" "1" ;
@@ -577,6 +577,12 @@ windowDef Desktop
 		set "desktop::active" "1" ;
 		resettime "anim_in" "0" ;
 		set "desktop::dest" "2" ;
+	}
+
+	onNamedEvent fromRestart_toSurvival {
+		set "desktop::active" "1" ;
+		resettime "anim_in" "0" ;
+		set "desktop::dest" "1" ;
 	}
 
 	onNamedEvent NoIntro {
@@ -935,8 +941,9 @@ windowDef Desktop
 				visible	1
 				forecolor	1,1,1,0
 				text	"#str_200005"
-				textscale	.33
+				textscale	0.33
 				font	"fonts/marine"
+				textstyle	2
 			}
 			windowDef bg2
 			{
@@ -1081,8 +1088,9 @@ windowDef Desktop
 				visible	1
 				forecolor	1,1,1,0.8
 				text	"#str_200014"
-				textscale	.31
+				textscale	0.31
 				font	"fonts/marine"
+				textstyle	2
 			}
 			windowDef new_t_b2
 			{
@@ -1090,8 +1098,9 @@ windowDef Desktop
 				visible	1
 				forecolor	1,1,1,0.8
 				text	"#str_200015"
-				textscale	.31
+				textscale	0.31
 				font	"fonts/marine"
+				textstyle	2
 			}
 			windowDef new_t_b3
 			{
@@ -1099,8 +1108,9 @@ windowDef Desktop
 				visible	1
 				forecolor	1,1,1,0.8
 				text	"#str_200016"
-				textscale	.31
+				textscale	0.31
 				font	"fonts/marine"
+				textstyle	2
 			}
 			windowDef new_t_b4
 			{
@@ -1108,8 +1118,9 @@ windowDef Desktop
 				visible	1
 				forecolor	1,1,1,0.8
 				text	"#str_200017"
-				textscale	.31
+				textscale	0.31
 				font	"fonts/marine"
+				textstyle	2
 			}
 			windowDef new_back
 			{
@@ -1155,7 +1166,7 @@ windowDef Desktop
 				rect	265,228,198,25
 				visible	1
 				forecolor	1,1,1,0.8
-				text	"Select and Continue"
+				text	Continue
 				textscale	.33
 				font	"fonts/marine"
 			}
@@ -9414,9 +9425,9 @@ windowDef Desktop
 			}
 			windowDef raven
 			{
-				rect	120,40,400,400
+				rect	13,40,619,393
 				visible	1
-				backcolor	1,0.474,0.223,1
+				backcolor	0.501,0.250,0,1
 				bordersize	1
 				bordercolor	0,0,0,1
 			}
@@ -9424,27 +9435,37 @@ windowDef Desktop
 			{
 				rect	290,40,86,37
 				visible	1
-				forecolor	0,0,0,1
+				forecolor	0.501,1,1,1
 				text	"KF2 Mod"
 				textscale	0.33
 				textalign	1
 			}
+			editDef part0
+			{
+				rect	14,70,396,15
+				visible	1
+				forecolor	0.501,1,1,1
+				text	"How to Use the Mod:"
+				textscale	0.25
+				font	"fonts/marine"
+				textalignx	10
+			}
 			editDef part1
 			{
-				rect	122,76,398,31
+				rect	15,84,396,15
 				visible	1
-				forecolor	0,0,0,1
-				text	"#str_223010"
+				forecolor	0.486,1,0.486,1
+				text	"- To start playing, click on 'Survival' from the main menu"
 				textscale	0.2
 				font	"fonts/marine"
 				textalignx	10
 			}
 			editDef part2
 			{
-				rect	122,95,398,31
+				rect	15,94,404,16
 				visible	1
-				forecolor	0,0,0,1
-				text	"#str_223011"
+				forecolor	0.486,1,0.486,1
+				text	"- Next choose a difficulty and click on Contiinue"
 				textscale	0.2
 				font	"fonts/marine"
 				nowrap	1
@@ -9452,10 +9473,10 @@ windowDef Desktop
 			}
 			editDef part3
 			{
-				rect	122,114,398,31
+				rect	15,104,395,16
 				visible	1
-				forecolor	0,0,0,1
-				text	"#str_223012"
+				forecolor	0.486,1,0.486,1
+				text	"- Finally, choose the class you want and click start"
 				textscale	0.2
 				font	"fonts/marine"
 				nowrap	1
@@ -9463,21 +9484,21 @@ windowDef Desktop
 			}
 			editDef part4
 			{
-				rect	122,133,398,31
+				rect	15,114,395,16
 				visible	1
-				forecolor	0,0,0,1
-				text	"#str_223013"
-				textscale	0.2
+				forecolor	0.501,1,1,1
+				text	"How do I choose a class?"
+				textscale	0.25
 				font	"fonts/marine"
 				nowrap	1
 				textalignx	10
 			}
 			editDef part5
 			{
-				rect	122,151,398,31
+				rect	14,132,398,15
 				visible	1
-				forecolor	0,0,0,1
-				text	"#str_223014"
+				forecolor	0.486,1,0.486,1
+				text	"- You choose a class after clicking through 'Survival'"
 				textscale	0.2
 				font	"fonts/marine"
 				nowrap	1
@@ -9485,24 +9506,276 @@ windowDef Desktop
 			}
 			editDef part6
 			{
-				rect	122,172,398,31
+				rect	14,145,400,15
 				visible	1
-				forecolor	0,0,0,1
-				text	"#str_223015"
-				textscale	0.2
+				forecolor	0.501,1,1,1
+				text	"How do I level up?"
+				textscale	0.25
 				font	"fonts/marine"
 				nowrap	1
 				textalignx	10
 			}
 			editDef part7
 			{
-				rect	122,188,398,31
+				rect	14,163,394,17
 				visible	1
-				forecolor	0,0,0,1
-				text	"***WILL NOT WORK WITH MULTIPLAYER***"
+				forecolor	0.486,1,0.486,1
+				text	"- Killing enemies give you xp"
 				textscale	0.2
 				font	"fonts/marine"
 				nowrap	1
+				textalignx	10
+			}
+			editDef warning1
+			{
+				rect	145,406,358,15
+				visible	1
+				forecolor	1,1,0.501,1
+				text	"*** MAKE SURE TO BIND A KEY TO THE BUY MENU ***"
+				textscale	0.2
+				font	"fonts/marine"
+				nowrap	1
+				textalignx	10
+			}
+			editDef warning2
+			{
+				rect	174,418,284,16
+				visible	1
+				forecolor	1,1,0.501,1
+				text	"*** WILL NOT WORK WITH MULTIPLAYER ***"
+				textscale	0.2
+				font	"fonts/marine"
+				nowrap	1
+				textalignx	10
+			}
+			editDef warning3
+			{
+				rect	135,396,364,16
+				visible	1
+				forecolor	1,1,0.498,1
+				text	"*** DO NOT SAVE/LOAD! NOT MADE TO SAVE OR LOAD ***"
+				textscale	0.2
+				font	"fonts/marine"
+				nowrap	1
+				textalignx	10
+			}
+			editDef part8
+			{
+				rect	14,175,394,17
+				visible	1
+				forecolor	0.486,1,0.486,1
+				text	"- Your level can be seen on the bottom right of the HUD"
+				textscale	0.2
+				font	"fonts/marine"
+				nowrap	1
+				textalignx	10
+			}
+			editDef part9
+			{
+				rect	14,187,394,17
+				visible	1
+				forecolor	0.501,1,1,1
+				text	"How do I unlock perks?"
+				textscale	0.25
+				font	"fonts/marine"
+				nowrap	1
+				textalignx	10
+			}
+			editDef part10
+			{
+				rect	16,203,394,17
+				visible	1
+				forecolor	0.486,1,0.486,1
+				text	"- You unlock class perks at levesl 5, 10, and 15"
+				textscale	0.20
+				font	"fonts/marine"
+				nowrap	1
+				textalignx	10
+			}
+			editDef part11
+			{
+				rect	15,215,394,17
+				visible	1
+				forecolor	0.501,1,1,1
+				text	"What are the class perks?"
+				textscale	0.25
+				font	"fonts/marine"
+				nowrap	1
+				textalignx	10
+			}
+			editDef part12
+			{
+				rect	15,264,394,17
+				visible	1
+				forecolor	0.501,1,1,1
+				text	"How do I buy items?"
+				textscale	0.25
+				font	"fonts/marine"
+				nowrap	1
+				textalignx	10
+			}
+			editDef part13
+			{
+				rect	15,323,394,17
+				visible	1
+				forecolor	0.501,1,1,1
+				text	"How do I get dosh (money)"
+				textscale	0.25
+				font	"fonts/marine"
+				nowrap	1
+				textalignx	10
+			}
+			editDef part14
+			{
+				rect	15,298,394,17
+				visible	1
+				forecolor	0.501,1,1,1
+				text	"How do I know I got the item?"
+				textscale	0.25
+				font	"fonts/marine"
+				nowrap	1
+				textalignx	10
+			}
+			editDef part15
+			{
+				rect	15,368,394,17
+				visible	1
+				forecolor	0.501,1,1,1
+				text	"How do I know how much dosh I have?"
+				textscale	0.25
+				font	"fonts/marine"
+				nowrap	1
+				textalignx	10
+			}
+			editDef part16
+			{
+				rect	16,382,615,15
+				visible	1
+				forecolor	0.498,1,0.498,1
+				text	"- Open the buy menu, the dosh you have is displayed at the bottom of the menu"
+				textscale	0.2
+				font	"fonts/marine"
+				nowrap	1
+				textalignx	10
+			}
+			editDef part17
+			{
+				rect	16,337,615,15
+				visible	1
+				forecolor	0.498,1,0.498,1
+				text	"- When enemies are killed, they drop dosh"
+				textscale	0.2
+				font	"fonts/marine"
+				nowrap	1
+				textalignx	10
+			}
+			editDef part18
+			{
+				rect	16,348,615,15
+				visible	1
+				forecolor	0.498,1,0.498,1
+				text	"- It will look like an armor shard, walk over it to pick it up"
+				textscale	0.2
+				font	"fonts/marine"
+				nowrap	1
+				textalignx	10
+			}
+			editDef part19
+			{
+				rect	16,359,615,15
+				visible	1
+				forecolor	0.482,1,0.482,1
+				text	"- To know if you picked it up, you can always check your dosh counter in the buy menu"
+				textscale	0.2
+				font	"fonts/marine"
+				nowrap	1
+				textalignx	10
+			}
+			editDef part20
+			{
+				rect	16,314,615,15
+				visible	1
+				forecolor	0.494,1,0.494,1
+				text	"- Your dosh counter will decrease in size at the bottom of the buy menu"
+				textscale	0.2
+				font	"fonts/marine"
+				nowrap	1
+				textalignx	10
+			}
+			editDef part21
+			{
+				rect	16,277,615,15
+				visible	1
+				forecolor	0.486,1,0.486,1
+				text	"- Push down on the key binded to the buy menu, this will open up a menu"
+				textscale	0.2
+				font	"fonts/marine"
+				nowrap	1
+				textalignx	10
+			}
+			editDef part22
+			{
+				rect	16,290,615,15
+				visible	1
+				forecolor	0.478,1,0.478,1
+				text	"- Buy an item by moving your mouse over one of the green items and click on it"
+				textscale	0.2
+				font	"fonts/marine"
+				nowrap	1
+				textalignx	10
+			}
+			editDef part23
+			{
+				rect	16,229,615,15
+				visible	1
+				forecolor	0.470,1,0.470,1
+				text	"- Gunslinger: Reload faster, deal 20% critical dmg, kills increase speed by 4% (Max 40%)"
+				textscale	0.2
+				font	"fonts/marine"
+				nowrap	1
+				textalignx	10
+			}
+			editDef part24
+			{
+				rect	16,243,615,15
+				visible	1
+				forecolor	0.466,1,0.466,1
+				text	"- Demo: Explosion Resistance, Explosive splash dmg increased to 40%, increased explosive projectiles"
+				textscale	0.18
+				font	"fonts/marine"
+				nowrap	1
+				textalignx	10
+			}
+			editDef part25
+			{
+				rect	16,253,615,15
+				visible	1
+				forecolor	0.458,1,0.458,1
+				text	"- Beserker: Shield converts to health, killing recovers 5 health, melee dmg reduced by 40%"
+				textscale	0.2
+				font	"fonts/marine"
+				nowrap	1
+				textalignx	10
+			}
+			editDef part35
+			{
+				rect	113,57,395,16
+				visible	1
+				forecolor	0.501,1,1,1
+				text	"Enemies spawn in waves, survive as long as you can"
+				textscale	0.2
+				font	"fonts/marine"
+				nowrap	1
+				textalignx	10
+			}
+			editDef part36
+			{
+				rect	14,54,396,15
+				visible	1
+				forecolor	0.501,1,1,1
+				text	"Description:"
+				textscale	0.25
+				font	"fonts/marine"
 				textalignx	10
 			}
 		}
@@ -10819,7 +11092,9 @@ windowDef Desktop
 
 			onTime 0 {
 				consoleCMD "g_skill 1" ;
+				consoleCMD "g_player_class 0" ;
 				set "desktop::skill" "1" ;
+				set "desktop::class" "0" ;
 				
 				transition "p_newgame::rect" "$d_main_l::rect" "$d_main::rect" "0" ;
 				set "p_newgame::visible" "1" ;
@@ -13102,7 +13377,7 @@ windowDef Desktop
 				set "main_b_return::visible" "1" ;
 				set "main_b_mods::visible" "0" ;
 				set "main_b_updates::visible" "0" ;
-				set "main_b_credits::visible" "0" ;
+				set "main_b_credits::visible" "1" ;
 			} else if ("gui::ingame" == 2) {
 				set "main_b_returnmp::visible" "1" ;
 				set "main_b_newgame::visible" "0" ;
@@ -13114,7 +13389,7 @@ windowDef Desktop
 				set "main_b_mods::visible" "1" ;
 				set "main_b_updates::visible" "1" ;
 				set "main_b_credits::visible" "1" ;
-			} 
+			}
 			set "main_b_loadgame::visible" "1" ;
 			set "main_b_settings::visible" "1" ;
 			set "main_b_exit::visible" "1" ;
@@ -13625,6 +13900,55 @@ windowDef Desktop
 				set "new_t_b4::forecolor" "$desktop::orange" "0" ; 
 				set "new_t_b4::textscale" "0.32" ; 
 				set "new_diffDescript::text" "#str_200185"
+			}
+		}
+
+		onNamedEvent classCheck {
+			set "choose_b1::matcolor_w" "0.4" ;
+			set "choose_t_b1::forecolor" "$desktop::white_8" ; 
+			set "choose_t_b1::textscale" "0.31" ;
+			set "choose_b2::matcolor_w" "0.4" ;
+			set "choose_t_b2::forecolor" "$desktop::white_8" ; 
+			set "choose_t_b2::textscale" "0.31" ;
+			set "choose_b3::matcolor_w" "0.4" ;
+			set "choose_t_b3::forecolor" "$desktop::white_8" ; 
+			set "choose_t_b3::textscale" "0.31" ;
+			if ("desktop::class" == 0) {
+				set "choose_b1::matcolor_w" "1" ;
+				set "choose_t_b1::forecolor" "$desktop::orange" "0" ; 
+				set "choose_t_b1::textscale" "0.32" ; 
+				set "choose_diffDescript::text" "Like speed and mobility? This class is great for moving around hordes and dealing damage"
+				set "new_b_skill1::visible" "0" ;
+				set "new_b_skill2::visible" "0" ;
+				set "new_b_skill3::visible" "0" ;
+				set "new_b_skill4::visible" "0" ;
+				set "choose_b_skill1::visible" "0" ;
+				set "choose_b_skill2::visible" "1" ;
+				set "choose_b_skill3::visible" "1" ;
+			} else if ("desktop::class" == 1) {
+				set "choose_b2::matcolor_w" "1" ;
+				set "choose_t_b2::forecolor" "$desktop::orange" "0" ; 
+				set "choose_t_b2::textscale" "0.32" ; 
+				set "choose_diffDescript::text" "Like explosives? This class is great for explosive weapons and zoning enemies"
+				set "new_b_skill1::visible" "0" ;
+				set "new_b_skill2::visible" "0" ;
+				set "new_b_skill3::visible" "0" ;
+				set "new_b_skill4::visible" "0" ;
+				set "choose_b_skill1::visible" "1" ;
+				set "choose_b_skill2::visible" "0" ;
+				set "choose_b_skill3::visible" "1" ;
+			} else if ("desktop::class" == 2) {
+				set "choose_b3::matcolor_w" "1" ;
+				set "choose_t_b3::forecolor" "$desktop::orange" "0" ; 
+				set "choose_t_b3::textscale" "0.32" ; 
+				set "choose_diffDescript::text" "Want to be a tank? This class is made for those who want to tank damage"
+				set "new_b_skill1::visible" "0" ;
+				set "new_b_skill2::visible" "0" ;
+				set "new_b_skill3::visible" "0" ;
+				set "new_b_skill4::visible" "0" ;
+				set "choose_b_skill1::visible" "1" ;
+				set "choose_b_skill2::visible" "1" ;
+				set "choose_b_skill3::visible" "0" ;
 			}
 		}
 
@@ -14500,7 +14824,7 @@ windowDef Desktop
 			}
 
 			onMouseExit {
-				if ("desktop::active" == 0) {
+				if ("desktop::active" == 0 || "desktop::active" == 1) {
 					transition "main_t_b7::forecolor"  "$desktop::white" "$desktop::white_5" "300" ; 
 					transition "main_b7_corner::matcolor"  "$desktop::orange" "$desktop::corner" "300" ; 
 					
@@ -14759,7 +15083,7 @@ windowDef Desktop
 			}
 
 			onMouseExit {
-				if ("desktop::active" == 0) {
+				if ("desktop::active" == 0 && "desktop::class" != 0) {
 					transition "choose_b1::matcolor_w" "1" "0.4" "300" ;
 					transition "choose_t_b1::forecolor"  "$desktop::orange" "$desktop::white_8" "300" ; 
 					transition "choose_t_b1::textscale" "0.32" "0.31" "300" ;
@@ -14767,10 +15091,10 @@ windowDef Desktop
 			}
 
 			onAction {
-				//set "desktop::skill" "0" ;
+				set "desktop::class" "0" ;
 				consoleCMD "g_player_class 0";
 				//namedevent "p_btns::showNew" ;
-				//namedevent "p_btns::skillCheck" ;
+				namedevent "p_btns::classCheck" ;
 				
 				set "cmd" "play main_menu_selection" ;
 			}
@@ -14794,7 +15118,7 @@ windowDef Desktop
 			}
 
 			onMouseExit {
-				if ("desktop::active" == 0) {
+				if ("desktop::active" == 0 && "desktop::class" != 1) {
 					transition "choose_b2::matcolor_w" "1" "0.4" "300" ;
 					transition "choose_t_b2::forecolor"  "$desktop::orange" "$desktop::white_8" "300" ; 
 					transition "choose_t_b2::textscale" "0.32" "0.31" "300" ;
@@ -14802,10 +15126,10 @@ windowDef Desktop
 			}
 
 			onAction {
-				//set "desktop::skill" "0" ;
+				set "desktop::class" "1" ;
 				consoleCMD "g_player_class 1" ;
 				//namedevent "p_btns::showNew" ;
-				//namedevent "p_btns::skillCheck" ;
+				namedevent "p_btns::classCheck" ;
 				
 				set "cmd" "play main_menu_selection" ;
 			}
@@ -14829,7 +15153,7 @@ windowDef Desktop
 			}
 
 			onMouseExit {
-				if ("desktop::active" == 0) {
+				if ("desktop::active" == 0 && "desktop::class" != 2) {
 					transition "choose_b3::matcolor_w" "1" "0.4" "300" ;
 					transition "choose_t_b3::forecolor"  "$desktop::orange" "$desktop::white_8" "300" ; 
 					transition "choose_t_b3::textscale" "0.32" "0.31" "300" ;
@@ -14837,10 +15161,10 @@ windowDef Desktop
 			}
 
 			onAction {
-				//set "desktop::skill" "0" ;
+				set "desktop::class" "2" ;
 				consoleCMD "g_player_class 2" ;
 				//namedevent "p_btns::showNew" ;
-				//namedevent "p_btns::skillCheck" ;
+				namedevent "p_btns::classCheck" ;
 				
 				set "cmd" "play main_menu_selection" ;
 			}
@@ -14916,6 +15240,10 @@ windowDef Desktop
 				resettime "anim_newOut" "0" ;
 				set "desktop::dest" "0" ;
 				set "p_choose_class::visible" "0";
+				set "choose_b_skill1::visible" "0";
+				set "choose_b_skill2::visible" "0";
+				set "choose_b_skill3::visible" "0";
+				set "choose_b_start::visible" "0";
 				
 				set "cmd" "play main_menu_selection" ;
 			}
@@ -18663,7 +18991,7 @@ windowDef Desktop
 			}
 
 			onMouseExit {
-				if ("desktop::active" == 0) {
+				if ("desktop::active" == 0 ||"desktop::active" == 1) {
 					transition "credits_back::matcolor_w" "0.8" "0.4" "300" ;
 					transition "credits_t_back::forecolor"  "$desktop::orange" "$desktop::white_8" "300" ; 
 					transition "credits_back_corner::matcolor"  "$desktop::orange" "$desktop::corner" "300" ; 
@@ -20503,5 +20831,23 @@ windowDef Desktop
 			}
 
 		}
+	}
+	windowDef modTitleOfficial
+	{
+		rect	40,185,183,28
+		visible	1
+		forecolor	0,0,0,1
+		text	"Killing Floor Mod:"
+		textscale	0.28
+		font	"fonts/r_strogg"
+	}
+	windowDef sTxt
+	{
+		rect	224,184,183,28
+		visible	1
+		forecolor	1,0,0,1
+		text	"Survival V1.0"
+		textscale	0.3
+		font	"fonts/r_strogg"
 	}
 }

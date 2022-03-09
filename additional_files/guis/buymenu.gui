@@ -13,55 +13,143 @@ windowDef Desktop
 	{
 		rect	285,8,347,459
 		visible	1
-		backcolor	1,1,1,0.352
+		backcolor	0,0.250,0.501,0.341
 		windowDef Shotgun
 		{
-			rect	34,40,270,30
+			rect	39,37,267,30
 			visible	1
 			backcolor	0,0.498,0,1
 			forecolor	1,1,1,1
 			text	"Shotgun - $200"
-			textscale	0.4
+			textscale	0.33
 			textalign	1
 			font	"fonts/marine"
 		}
 		windowDef Machinegun
 		{
-			rect	35,80,267,30
+			rect	39,76,267,30
 			visible	1
 			backcolor	0,0.501,0,1
 			forecolor	1,1,1,1
-			text	"Machinegun-$400"
-			textscale	0.4
+			text	"Machinegun - $400"
+			textscale	0.33
+			textalign	1
+			font	"fonts/marine"
+		}
+		windowDef Hyperblaster
+		{
+			rect	39,115,267,30
+			visible	1
+			backcolor	0,0.501,0,1
+			forecolor	1,1,1,1
+			text	"Hyperblaster - $1,000"
+			textscale	0.33
+			textalign	1
+			font	"fonts/marine"
+		}
+		windowDef RocketLauncher
+		{
+			rect	39,154,267,30
+			visible	1
+			backcolor	0,0.501,0,1
+			forecolor	1,1,1,1
+			text	"Rocket Launcher - $3,000"
+			textscale	0.33
+			textalign	1
+			font	"fonts/marine"
+		}
+		windowDef GrenadeLauncher
+		{
+			rect	39,193,267,30
+			visible	1
+			backcolor	0,0.501,0,1
+			forecolor	1,1,1,1
+			text	"Grenade Launcher - $3,000"
+			textscale	0.31
+			textalign	1
+			font	"fonts/marine"
+		}
+		windowDef Railgun
+		{
+			rect	39,231,267,30
+			visible	1
+			backcolor	0,0.501,0,1
+			forecolor	1,1,1,1
+			text	"Railgun - $1,000"
+			textscale	0.33
+			textalign	1
+			font	"fonts/marine"
+		}
+		windowDef Nailgun
+		{
+			rect	39,269,267,30
+			visible	1
+			backcolor	0,0.501,0,1
+			forecolor	1,1,1,1
+			text	"Nailgun - $1,000"
+			textscale	0.33
+			textalign	1
+			font	"fonts/marine"
+		}
+		windowDef LightningGun
+		{
+			rect	39,307,267,30
+			visible	1
+			backcolor	0,0.501,0,1
+			forecolor	1,1,1,1
+			text	"Lightning Gun - $20,000"
+			textscale	0.33
+			textalign	1
+			font	"fonts/marine"
+		}
+		windowDef DarkMatterGun
+		{
+			rect	39,343,267,30
+			visible	1
+			backcolor	0,0.501,0,1
+			forecolor	1,1,1,1
+			text	"Dark Matter Gun - $40,000"
+			textscale	0.31
+			textalign	1
+			font	"fonts/marine"
+		}
+		windowDef Health
+		{
+			rect	24,384,125,29
+			visible	1
+			backcolor	0,0.501,0,1
+			text	"Health - $100"
+			forecolor	1,1,1,1
+			textscale	0.28
 			textalign	1
 			font	"fonts/marine"
 		}
 		windowDef Ammo
 		{
-			rect	59,329,209,44
+			rect	193,384,125,29
 			visible	1
 			backcolor	0,0.501,0,1
-			text	"Buy Ammo"
+			text	"Ammo - $1,000"
 			forecolor	1,1,1,1
-			textscale	0.5
+			textscale	0.29
 			textalign	1
 			font	"fonts/marine"
 		}
 		windowDef Armor
 		{
-			rect	59,381,210,41
+			rect	24,422,125,29
 			visible	1
 			backcolor	0,0.501,0,1
-			text	"Buy Armor"
+			text	"Armor - $300"
 			forecolor	1,1,1,1
-			textscale	0.5
+			textscale	0.28
 			textalign	1
 			font	"fonts/marine"
 		}
 	}
 	windowDef dosh
 	{
-		rect	510,444,122,23
+		rect	510,435,122,23
 		visible	1
 		forecolor	1,1,1,1
 		text	"gui::dosh"
@@ -73,7 +161,7 @@ windowDef Desktop
 		visible	1
 		windowDef btn_Shotgun
 		{
-			rect	34,40,270,30
+			rect	35,37,267,30
 			visible	1
 
 			onAction {
@@ -84,7 +172,7 @@ windowDef Desktop
 		}
 		windowDef btn_Machinegun
 		{
-			rect	35,80,267,30
+			rect	35,76,267,30
 			visible	1
 
 			onAction {
@@ -93,9 +181,97 @@ windowDef Desktop
 			}
 
 		}
+		windowDef btn_HyperBlaster
+		{
+			rect	35,115,267,30
+			visible	1
+
+			onAction {
+				consoleCMD "buy weapon_hyperblaster" ;
+				
+			}
+
+		}
+		windowDef btn_Rocket
+		{
+			rect	35,154,267,30
+			visible	1
+
+			onAction {
+				consoleCMD "buy weapon_rocketlauncher" ;
+				
+			}
+
+		}
+		windowDef btn_Grenade
+		{
+			rect	35,193,267,30
+			visible	1
+
+			onAction {
+				consoleCMD "buy weapon_grenadelauncher" ;
+				
+			}
+
+		}
+		windowDef btn_Railgun
+		{
+			rect	35,231,267,30
+			visible	1
+
+			onAction {
+				consoleCMD "buy weapon_railgun" ;
+				
+			}
+
+		}
+		windowDef btn_Nailgun
+		{
+			rect	35,269,267,30
+			visible	1
+
+			onAction {
+				consoleCMD "buy weapon_nailgun" ;
+				
+			}
+
+		}
+		windowDef btn_Lightning
+		{
+			rect	35,307,267,30
+			visible	1
+
+			onAction {
+				consoleCMD "buy weapon_lightninggun" ;
+				
+			}
+
+		}
+		windowDef btn_DarkMatter
+		{
+			rect	35,343,267,30
+			visible	1
+
+			onAction {
+				consoleCMD "buy weapon_dmg" ;
+				
+			}
+
+		}
+		windowDef btn_Health
+		{
+			rect	24,384,125,29
+			visible	1
+
+			onAction {
+				consoleCMD "buy item_health_large" ;
+				
+			}
+
+		}
 		windowDef btn_Ammo
 		{
-			rect	59,329,209,44
+			rect	187,387,125,31
 			visible	1
 
 			onAction {
@@ -106,7 +282,7 @@ windowDef Desktop
 		}
 		windowDef btn_Armor
 		{
-			rect	59,381,210,41
+			rect	23,420,124,32
 			visible	1
 
 			onAction {
@@ -126,7 +302,7 @@ windowDef Desktop
 	}
 	windowDef doshTxt
 	{
-		rect	459,443,51,24
+		rect	459,435,51,24
 		visible	1
 		forecolor	1,1,1,1
 		text	"Dosh:"

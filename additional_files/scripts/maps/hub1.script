@@ -1318,8 +1318,8 @@ void main()
 	//anything that you want to occur at the start of the map should be called or threaded
 	//from here.
 	
-	thread hub1Preset();
-	thread liftDown(); 	//start the map with the ride down
+	//thread hub1Preset();
+	//thread liftDown(); 	//start the map with the ride down
 	thread hidePillars();	//hide the pillars in the pillar room for overdraw performance
 	thread cold_breath();
 		

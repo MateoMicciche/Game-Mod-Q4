@@ -1,3 +1,4 @@
+#include "Player.h"
 // RAVEN BEGIN
 // bdube: note that this file is no longer merged with Doom3 updates
 //
@@ -2690,6 +2691,11 @@ int idPlayer::GetLevel()
 	return lvl;
 }
 
+void idPlayer::SetLevel(int level)
+{
+	lvl = level;
+}
+
 void idPlayer::CheckLevel()
 {
 	if (xp > xpNeeded) {
@@ -2702,6 +2708,7 @@ void idPlayer::CheckLevel()
 	const char * playerClass = g_player_class.GetString();
 	int number = atoi(playerClass);
 
+	/*
 	// Carries out perk unlocks/explains where perks were implemented
 	switch (lvl) {
 		case 5:
@@ -2758,18 +2765,77 @@ void idPlayer::CheckLevel()
 			}
 			break;
 	}
+	*/
 
-	if (canRegen == true && lvl >= 10) {
-		health += 5;
+
+	// Perk 1 Gunslinger
+	// Implemented in all Weapon.cpp related files (Weapons reload faster)
+
+	// Perk 2 Gunslinger
+	// Implemented in Actor.cpp (Player does 20% more damage to critical areas (headshots))
+
+	// Perk 3 Gunslinger
+	// For each kill, increase speed up to 350
+	if (number == 0 && lvl >= 15) {
+		canZoom = true;
+	}
+
+	// Perk 1 Demo
+	// Implemented in all Weapon.cpp related files (Weapons reload faster)
+	if (number == 1 && lvl >= 5) {
+		canBoom = false;
+	}
+
+	// Perk 2 Demo
+	// Implemented in Gamelocal.cpp (Radius for explosive weapons increased by 50%)
+
+
+	// Perk 3 Demo
+	// Implemented in WeaponRocketLauncher.cpp (Shoot a spread of rockets)
+	// GrenadeLaucherLauncher does it too (Shoot spread of nades)
+
+
+	// Perk 1 Beserker
+	// Shield becomes health
+	if (number == 2 && lvl >= 5) {
+		if (player->inventory.maxHealth != 225) {
+			player->inventory.armor = 0;
+			player->inventory.maxHealth = inventory.maxHealth + inventory.maxarmor;
+			player->inventory.maxarmor = 0;
+			health = player->inventory.maxHealth;
+		}
+	}
+
+	// Perk 2 Beserker
+	// Every kill the player regens 5 health (Does not count if you kill multiple enemies at once)
+	if (number == 2 && lvl >= 10) {
+		canRegen = true;
+	}
+
+	// Perk 3 Beserker
+	// Implememted in Damage (Damage by enemies reduced by 40%)
+
+
+	// Checks for if code should activate these perks
+	if (canRegen && lvl >= 10) {
+		if ((health + 5) <= inventory.maxHealth) {
+			health += 5;
+		}
+		else {
+			health = inventory.maxHealth;
+		}
 	}
 	if (canZoom && lvl >= 15) {
 		speedBoost += 10;
 		AdjustSpeed();
 	}
+
+	// Update players level on hud
 	hud->SetStateInt("player_level", lvl);
 	//UpdateHud();
 }
 
+/*
 void idPlayer::AssignPlayerClass(const char * num)
 {	
 	// 1 for Gunslinger
@@ -2786,7 +2852,7 @@ void idPlayer::AssignPlayerClass(const char * num)
 		gameLocal.Printf("I am a Beserker\n");
 	}
 }
-
+*/
 /*
 ===============
 idPlayer::PrepareForRestart
@@ -4073,7 +4139,7 @@ void idPlayer::UpdateConditions( void ) {
 	} else if ( gameLocal.time - lastDmgTime < 500 ) {
 		forwardspeed	= velocity * viewAxis[ 0 ];
 		sidespeed		= velocity * viewAxis[ 1 ];
-		pfl.forward		= pfl.onGround && ( forwardspeed > 20.01f );
+		pfl.forward		= pfl.onGround && ( forwardspeed > 1.0f );
 		pfl.backward	= pfl.onGround && ( forwardspeed < -20.01f );
 		pfl.strafeLeft	= pfl.onGround && ( sidespeed > 20.01f );
 		pfl.strafeRight	= pfl.onGround && ( sidespeed < -20.01f );
@@ -8324,15 +8390,15 @@ int idPlayer::GetItemCost( const char* itemName ) {
 	idDict traderCosts;													// traderCosts for determining how much an item is worth
 	traderCosts.Set("weapon_shotgun", "200");
 	traderCosts.Set("weapon_machinegun", "400");
-	traderCosts.Set("weapon_hyperblaster", "100");
-	traderCosts.Set("weapon_grenadelauncher", "100");
-	traderCosts.Set("weapon_rocketlauncher", "100");
-	traderCosts.Set("weapon_railgun", "100");
-	traderCosts.Set("weapon_nailgun", "100");
-	traderCosts.Set("weapon_lightninggun", "100");
-	traderCosts.Set("weapon_dmg", "100");
+	traderCosts.Set("weapon_hyperblaster", "1000");
+	traderCosts.Set("weapon_grenadelauncher", "3000");
+	traderCosts.Set("weapon_rocketlauncher", "3000");
+	traderCosts.Set("weapon_railgun", "800");
+	traderCosts.Set("weapon_nailgun", "1000");
+	traderCosts.Set("weapon_lightninggun", "20000");
+	traderCosts.Set("weapon_dmg", "40000");
 	traderCosts.Set("item_health_large", "100");
-	traderCosts.Set("ammorefill", "100");
+	traderCosts.Set("ammorefill", "1000");
 	traderCosts.Set("item_armor_small", "150");
 	traderCosts.Set("item_armor_large", "300");
 
@@ -8784,7 +8850,7 @@ void idPlayer::PerformImpulse( int impulse ) {
 		case IMPULSE_114:	break; // Unused
 		case IMPULSE_115:	break; // Unused
 		case IMPULSE_116:	break; // Unused
-		case IMPULSE_117:	AttemptToBuyItem( "item_health_large" );				break;
+		case IMPULSE_117:	AttemptToBuyItem( "item_health_large" );			break;
 		case IMPULSE_118:	AttemptToBuyItem( "item_armor_small" );				break;
 		case IMPULSE_119:	AttemptToBuyItem( "item_armor_large" );				break;
 		case IMPULSE_120:	AttemptToBuyItem( "ammorefill" );					break;
@@ -8957,7 +9023,7 @@ void idPlayer::AdjustSpeed( void ) {
 
 	const char* playerClass = g_player_class.GetString();
 	int number = atoi(playerClass);
-	if (number == 0 && lvl >= 1) {
+	if (number == 0 && lvl >= 15) {
 		if (speed + speedBoost >= 350) {
 			physicsObj.SetSpeed(350, pm_crouchspeed.GetFloat());
 		}
@@ -10206,7 +10272,7 @@ void idPlayer::CalcDamagePoints( idEntity *inflictor, idEntity *attacker, const 
 
 	const char* playerClass = g_player_class.GetString();
 	int number = atoi(playerClass);
-	if (number == 2 && lvl == 15) {
+	if (number == 2 && lvl >= 15) {
 		pDmgScale = 0.6;
 	}
 	else {
@@ -10298,7 +10364,7 @@ void idPlayer::Damage( idEntity *inflictor, idEntity *attacker, const idVec3 &di
 	//gameLocal.Printf("WHAT HURT ME %s\n", damageDefName);
 
 	if (!canBoom) {
-		if (0 == strcmp(damageDefName, "damage_rocketSplash") || 0 == strcmp(damageDefName, "damage_grenadeSplash")) {
+		if (0 == strcmp(damageDefName, "damage_rocketSplash") || 0 == strcmp(damageDefName, "damage_grenadeSplash") || 0 == strcmp(damageDefName, "damage_grenadeDirect")) {
 			return;
 		}
 	}

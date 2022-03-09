@@ -230,7 +230,7 @@ model weapon_shotgun_view
 	{
 		frame 4					sound_item		weapon_shotgun_shell
 	}
-	anim reload_loop1			models/weapons/shotgun/reload_loop.md5anim
+	anim gunslinger			models/weapons/shotgun/reload_loop.md5anim
 	{
 		frame 4					sound_item		weapon_shotgun_shell
 		rate 2.0

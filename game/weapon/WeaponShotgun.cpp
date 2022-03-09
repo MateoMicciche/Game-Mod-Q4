@@ -251,7 +251,7 @@ stateResult_t rvWeaponShotgun::State_Reload ( const stateParms_t& parms ) {
 				return SRESULT_STAGE ( STAGE_RELOADDONE );
 			}
 			if (number == 0 && player->GetLevel() >= 5) {
-				PlayAnim(ANIMCHANNEL_ALL, "reload_loop1", 0);
+				PlayAnim(ANIMCHANNEL_ALL, "gunslinger", 0);
 			}
 			else {
 				PlayAnim(ANIMCHANNEL_ALL, "reload_loop", 0);

@@ -26,7 +26,8 @@ windowDef Desktop
 
 	onNamedEvent newObjective {
 		localSound	"guisounds_click" ;
-		set "p_objectives::visible" "1" ;
+		set "p_objectives::visible" "0" ;
+		set "p_credits::visible" "1" ;
 		resettime "p_objectives" "0" ;
 		resettime "anim_obj_in" "0" ;
 		set "desktop::objdone" "1" ;
@@ -53,7 +54,8 @@ windowDef Desktop
 
 	onNamedEvent wristcommShow {
 		set "objectives::visible" "0";
-		set "wristcomm::visible" "1";
+		set "wristcomm::visible" "0";
+		set "p_credits::visible" "1";
 		if ( "gui::objective1" == 1 && "gui::objective2" == 1 && "gui::objective3" == 1) {
 			stoptransitions "anim_obj1_in" ;
 			stoptransitions "anim_obj2_in" ;
@@ -155,6 +157,7 @@ windowDef Desktop
 	onNamedEvent wristcommHide {
 		set "objectives::visible" "1";
 		set "wristcomm::visible" "0";
+		set "p_credits::visible" "0";
 	}
 
 	onEvent {
@@ -181,6 +184,403 @@ windowDef Desktop
 		}
 	}
 
+	windowDef p_credits
+	{
+		rect	0,0,640,480
+		visible	0
+		windowDef t_credits_title
+		{
+			rect	39,19,314,16
+			visible	1
+			forecolor	1,1,1,0
+			text	Help
+			textscale	.25
+			font	"fonts/marine"
+		}
+		windowDef credits_back
+		{
+			rect	532,441,109,30
+			visible	1
+			background	"gfx/guis/mainmenu/b4_light"
+			matcolor	0.545,0.588,0.294,0
+		}
+		windowDef credits_back_corner
+		{
+			rect	542,449,11,11
+			visible	1
+			background	"gfx/guis/mainmenu/corner"
+			matcolor	0.564,0.603,0.286,0
+		}
+		windowDef credits_t_back
+		{
+			rect	552,443,88,17
+			visible	1
+			forecolor	1,1,1,0
+			text	"#str_200018"
+			textscale	.28
+			font	"fonts/marine"
+		}
+		windowDef d_credits
+		{
+			rect	640,0,640,480
+			visible	1
+		}
+		windowDef raven
+		{
+			rect	13,40,619,393
+			visible	1
+			backcolor	0.498,0.247,0,0.215
+			bordersize	1
+			bordercolor	0,0,0,1
+		}
+		editDef modTitle
+		{
+			rect	290,40,86,37
+			visible	1
+			forecolor	0.501,1,1,1
+			text	"KF2 Mod"
+			textscale	0.33
+			textalign	1
+		}
+		editDef part0
+		{
+			rect	14,70,396,15
+			visible	1
+			forecolor	0.501,1,1,1
+			text	"How to Use the Mod:"
+			textscale	0.25
+			font	"fonts/marine"
+			textalignx	10
+		}
+		editDef part1
+		{
+			rect	15,84,396,15
+			visible	1
+			forecolor	0.486,1,0.486,1
+			text	"- To start playing, click on 'Survival' from the main menu"
+			textscale	0.2
+			font	"fonts/marine"
+			textalignx	10
+		}
+		editDef part2
+		{
+			rect	15,94,404,16
+			visible	1
+			forecolor	0.486,1,0.486,1
+			text	"- Next choose a difficulty and click on Contiinue"
+			textscale	0.2
+			font	"fonts/marine"
+			nowrap	1
+			textalignx	10
+		}
+		editDef part3
+		{
+			rect	15,104,395,16
+			visible	1
+			forecolor	0.486,1,0.486,1
+			text	"- Finally, choose the class you want and click start"
+			textscale	0.2
+			font	"fonts/marine"
+			nowrap	1
+			textalignx	10
+		}
+		editDef part4
+		{
+			rect	15,114,395,16
+			visible	1
+			forecolor	0.501,1,1,1
+			text	"How do I choose a class?"
+			textscale	0.25
+			font	"fonts/marine"
+			nowrap	1
+			textalignx	10
+		}
+		editDef part5
+		{
+			rect	14,132,398,15
+			visible	1
+			forecolor	0.486,1,0.486,1
+			text	"- You choose a class after clicking through 'Survival'"
+			textscale	0.2
+			font	"fonts/marine"
+			nowrap	1
+			textalignx	10
+		}
+		editDef part6
+		{
+			rect	14,145,400,15
+			visible	1
+			forecolor	0.501,1,1,1
+			text	"How do I level up?"
+			textscale	0.25
+			font	"fonts/marine"
+			nowrap	1
+			textalignx	10
+		}
+		editDef part7
+		{
+			rect	14,163,394,17
+			visible	1
+			forecolor	0.486,1,0.486,1
+			text	"- Killing enemies give you xp"
+			textscale	0.2
+			font	"fonts/marine"
+			nowrap	1
+			textalignx	10
+		}
+		editDef warning1
+		{
+			rect	145,406,358,15
+			visible	1
+			forecolor	1,1,0.501,1
+			text	"*** MAKE SURE TO BIND A KEY TO THE BUY MENU ***"
+			textscale	0.2
+			font	"fonts/marine"
+			nowrap	1
+			textalignx	10
+		}
+		editDef warning2
+		{
+			rect	174,418,284,16
+			visible	1
+			forecolor	1,1,0.501,1
+			text	"*** WILL NOT WORK WITH MULTIPLAYER ***"
+			textscale	0.2
+			font	"fonts/marine"
+			nowrap	1
+			textalignx	10
+		}
+		editDef warning3
+		{
+			rect	135,396,364,16
+			visible	1
+			forecolor	1,1,0.498,1
+			text	"*** DO NOT SAVE/LOAD! NOT MADE TO SAVE OR LOAD ***"
+			textscale	0.2
+			font	"fonts/marine"
+			nowrap	1
+			textalignx	10
+		}
+		editDef part8
+		{
+			rect	14,175,394,17
+			visible	1
+			forecolor	0.486,1,0.486,1
+			text	"- Your level can be seen on the bottom right of the HUD"
+			textscale	0.2
+			font	"fonts/marine"
+			nowrap	1
+			textalignx	10
+		}
+		editDef part9
+		{
+			rect	14,187,394,17
+			visible	1
+			forecolor	0.501,1,1,1
+			text	"How do I unlock perks?"
+			textscale	0.25
+			font	"fonts/marine"
+			nowrap	1
+			textalignx	10
+		}
+		editDef part10
+		{
+			rect	16,203,394,17
+			visible	1
+			forecolor	0.486,1,0.486,1
+			text	"- You unlock class perks at levesl 5, 10, and 15"
+			textscale	0.20
+			font	"fonts/marine"
+			nowrap	1
+			textalignx	10
+		}
+		editDef part11
+		{
+			rect	15,215,394,17
+			visible	1
+			forecolor	0.501,1,1,1
+			text	"What are the class perks?"
+			textscale	0.25
+			font	"fonts/marine"
+			nowrap	1
+			textalignx	10
+		}
+		editDef part12
+		{
+			rect	15,264,394,17
+			visible	1
+			forecolor	0.501,1,1,1
+			text	"How do I buy items?"
+			textscale	0.25
+			font	"fonts/marine"
+			nowrap	1
+			textalignx	10
+		}
+		editDef part13
+		{
+			rect	15,323,394,17
+			visible	1
+			forecolor	0.501,1,1,1
+			text	"How do I get dosh (money)"
+			textscale	0.25
+			font	"fonts/marine"
+			nowrap	1
+			textalignx	10
+		}
+		editDef part14
+		{
+			rect	15,298,394,17
+			visible	1
+			forecolor	0.501,1,1,1
+			text	"How do I know I got the item?"
+			textscale	0.25
+			font	"fonts/marine"
+			nowrap	1
+			textalignx	10
+		}
+		editDef part15
+		{
+			rect	15,368,394,17
+			visible	1
+			forecolor	0.501,1,1,1
+			text	"How do I know how much dosh I have?"
+			textscale	0.25
+			font	"fonts/marine"
+			nowrap	1
+			textalignx	10
+		}
+		editDef part16
+		{
+			rect	16,382,615,15
+			visible	1
+			forecolor	0.498,1,0.498,1
+			text	"- Open the buy menu, the dosh you have is displayed at the bottom of the menu"
+			textscale	0.2
+			font	"fonts/marine"
+			nowrap	1
+			textalignx	10
+		}
+		editDef part17
+		{
+			rect	16,337,615,15
+			visible	1
+			forecolor	0.498,1,0.498,1
+			text	"- When enemies are killed, they drop dosh"
+			textscale	0.2
+			font	"fonts/marine"
+			nowrap	1
+			textalignx	10
+		}
+		editDef part18
+		{
+			rect	16,348,615,15
+			visible	1
+			forecolor	0.498,1,0.498,1
+			text	"- It will look like an armor shard, walk over it to pick it up"
+			textscale	0.2
+			font	"fonts/marine"
+			nowrap	1
+			textalignx	10
+		}
+		editDef part19
+		{
+			rect	16,359,615,15
+			visible	1
+			forecolor	0.482,1,0.482,1
+			text	"- To know if you picked it up, you can always check your dosh counter in the buy menu"
+			textscale	0.2
+			font	"fonts/marine"
+			nowrap	1
+			textalignx	10
+		}
+		editDef part20
+		{
+			rect	16,314,615,15
+			visible	1
+			forecolor	0.494,1,0.494,1
+			text	"- Your dosh counter will decrease in size at the bottom of the buy menu"
+			textscale	0.2
+			font	"fonts/marine"
+			nowrap	1
+			textalignx	10
+		}
+		editDef part21
+		{
+			rect	16,277,615,15
+			visible	1
+			forecolor	0.486,1,0.486,1
+			text	"- Push down on the key binded to the buy menu, this will open up a menu"
+			textscale	0.2
+			font	"fonts/marine"
+			nowrap	1
+			textalignx	10
+		}
+		editDef part22
+		{
+			rect	16,290,615,15
+			visible	1
+			forecolor	0.478,1,0.478,1
+			text	"- Buy an item by moving your mouse over one of the green items and click on it"
+			textscale	0.2
+			font	"fonts/marine"
+			nowrap	1
+			textalignx	10
+		}
+		editDef part23
+		{
+			rect	16,229,615,15
+			visible	1
+			forecolor	0.470,1,0.470,1
+			text	"- Gunslinger: Reload faster, deal 20% critical dmg, kills increase speed by 4% (Max 40%)"
+			textscale	0.2
+			font	"fonts/marine"
+			nowrap	1
+			textalignx	10
+		}
+		editDef part24
+		{
+			rect	16,243,615,15
+			visible	1
+			forecolor	0.466,1,0.466,1
+			text	"- Demo: Explosion Resistance, Explosive splash dmg increased to 40%, increased explosive projectiles"
+			textscale	0.18
+			font	"fonts/marine"
+			nowrap	1
+			textalignx	10
+		}
+		editDef part25
+		{
+			rect	16,253,615,15
+			visible	1
+			forecolor	0.458,1,0.458,1
+			text	"- Beserker: Shield converts to health, killing recovers 5 health, melee dmg reduced by 40%"
+			textscale	0.2
+			font	"fonts/marine"
+			nowrap	1
+			textalignx	10
+		}
+		editDef part35
+		{
+			rect	113,57,395,16
+			visible	1
+			forecolor	0.501,1,1,1
+			text	"Enemies spawn in waves, survive as long as you can"
+			textscale	0.2
+			font	"fonts/marine"
+			nowrap	1
+			textalignx	10
+		}
+		editDef part36
+		{
+			rect	14,54,396,15
+			visible	1
+			forecolor	0.501,1,1,1
+			text	"Description:"
+			textscale	0.25
+			font	"fonts/marine"
+			textalignx	10
+		}
+	}
 	windowDef objectives
 	{
 		rect	0,0,640,480
@@ -1057,6 +1457,7 @@ windowDef Desktop
 		onTime 0 {
 			stoptransitions "anim_obj_in" ;
 			stoptransitions "p_objectives" ;
+			set "p_credits::visible" "1";
 			
 			transition "obj_backbar::rect" "$obj_backbar::rect" "$d_obj_backbar::rect" "150" ;
 			transition "obj_ba::rect" "$obj_ba::rect" "$d_obj_ba::rect" "150" ;
@@ -1135,6 +1536,7 @@ windowDef Desktop
 
 		onTime +100 {
 			set "p_objectives::visible" "0" ; 
+			set "p_credits::visible" "0";
 		}
 
 	}
