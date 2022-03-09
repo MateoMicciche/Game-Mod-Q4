@@ -2,7 +2,8 @@
 
 1. [Description](#Description)
 1. [Deliverables](#Deliverables)
-1. [Testing](#Testing)
+1. [Changes](#Changes)
+3. [Testing](#Testing)
 
 ## Description
 This KF2 inspired mod is a mod in which the player chooses between three unique classes and tries to 
@@ -28,6 +29,7 @@ Below are the deliverables for this mod:
 ### Money is gathered by killing enemeies and picking up the item "dosh"
 ### Player can level up can unlock perks by killing enemies
 ### Main menu, HUD, buymenu, and wristcomm have been modified for use of mod
+### Help menu can be found where credits used to be (can also be accessed ingame by pressing TAB)
 
 ## Testing
 Below explains how to test each deliverable:
