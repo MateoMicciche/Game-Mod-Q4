@@ -10258,6 +10258,24 @@ windowDef Desktop
 				}
 			}
 		}
+		windowDef modTitleOfficial
+		{
+			rect	40,185,183,28
+			visible	0
+			forecolor	0,0,0,1
+			text	"Killing Floor Mod:"
+			textscale	0.28
+			font	"fonts/r_strogg"
+		}
+		windowDef sTxt
+		{
+			rect	224,184,183,28
+			visible	0
+			forecolor	1,0,0,1
+			text	"Survival V1.0"
+			textscale	0.3
+			font	"fonts/r_strogg"
+		}
 	}
 	windowDef fade
 	{
@@ -20831,23 +20849,5 @@ windowDef Desktop
 			}
 
 		}
-	}
-	windowDef modTitleOfficial
-	{
-		rect	40,185,183,28
-		visible	1
-		forecolor	0,0,0,1
-		text	"Killing Floor Mod:"
-		textscale	0.28
-		font	"fonts/r_strogg"
-	}
-	windowDef sTxt
-	{
-		rect	224,184,183,28
-		visible	1
-		forecolor	1,0,0,1
-		text	"Survival V1.0"
-		textscale	0.3
-		font	"fonts/r_strogg"
 	}
 }
