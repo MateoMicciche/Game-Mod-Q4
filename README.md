@@ -19,17 +19,17 @@ Below are the deliverables for this mod:
 - Enemies drop currency that players can pick up
 
 ## Changes
-### Enemies Spawn in waves (Every other 20 seconds)
-### Players now pick out of three of the classes to spawn in as (Gunslinger, Demolitionist, Beserker) (Perks detailed in Testing)
-#### - Gunslinger has 75 health and 50 shield (Most mobile)
-#### - Demolitionist has 125 health and 75 shield (Average)
-#### - Beserker has 150 health and 75 shield (Slowest moving)
-### Player spawns in on one map (hub1)
-### Buy menu can be accessed ingame to purchase items
-### Money is gathered by killing enemeies and picking up the item "dosh"
-### Player can level up can unlock perks by killing enemies
-### Main menu, HUD, buymenu, and wristcomm have been modified for use of mod
-### Help menu can be found where credits used to be (can also be accessed ingame by pressing TAB)
+#### Enemies Spawn in waves (Every other 20 seconds)
+#### Players now pick out of three of the classes to spawn in as (Gunslinger, Demolitionist, Beserker) (Perks detailed in Testing)
+##### - Gunslinger has 75 health and 50 shield (Most mobile)
+##### - Demolitionist has 125 health and 75 shield (Average)
+##### - Beserker has 150 health and 75 shield (Slowest moving)
+#### Player spawns in on one map (hub1)
+#### Buy menu can be accessed ingame to purchase items
+#### Money is gathered by killing enemeies and picking up the item "dosh"
+#### Player can level up can unlock perks by killing enemies
+#### Main menu, HUD, buymenu, and wristcomm have been modified for use of mod
+#### Help menu can be found where credits used to be (can also be accessed ingame by pressing TAB)
 
 ## Testing
 Below explains how to test each deliverable:
