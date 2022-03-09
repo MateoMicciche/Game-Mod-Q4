@@ -1,4 +1,9 @@
 # IT266 Quake 4 Mod - KF2 Inspired Wave Survival Mod
+
+1. [Description](#Description)
+1. [Deliverables](#Deliverables)
+1. [Testing](#Testing)
+
 ## Description
 This KF2 inspired mod is a mod in which the player chooses between three unique classes and tries to 
 survive for as long as they can agaisnt waves of enemies. From killing enemies, players can earn xp and cash,
@@ -21,12 +26,16 @@ as there is about 20 seconds of peace (optimal time to utilize the shop) and 20 
 
 ### Three classes to choose from (Gunslinger, Demolitionist, Beserker)
 On game startup, click on 'Survival', then choose a difficulty, and the game screen will present the three classes to choose from.
-Choose one of the classes and launch the game to see the class in action.
+Choose one of the classes and launch the game to see the class in action. To see each class quickly, you can either quit the level
+and go back to the main menu, or on death, click restart and it will bring the player back to the main menu screen. Classes can only be chosen
+before match startup.
 
 ### Player earns xp and levels up to unlock perks (3 for each class)
-There are three classes, each with three perks. To test the perks, hit level 15 or set player level to 15
-and all perks will be active for the respective class. Below are the perks for each class:
-#### Gunslinger (Weak but quick)
+There are three classes, each with three perks that unlock at player levels 5, 10, and 15. 
+To test the perks, hit level 15 or set player level to 15 by typing
+this command into the console: 'setLevel 15'. All perks will be active for the respective class chosen.
+Below are the perks for each class:
+#### Gunslinger (Mobile damage dealer)
 - Level 5: Weapons reload faster (excluding Lightning and Dark Matter gun)
 - Level 10: Player deals 20% more damage on headshots
 - Level 15: For each kill, the players speed permanently increases by 5% to a max of 40%
