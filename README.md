@@ -1,17 +1,26 @@
 # Game-Mod-Q4# IT266 Quake 4 Mod - KF2 Inspired Wave Survival Mod
 
 1. [Description](#Description)
-1. [Deliverables](#Deliverables)
-1. [Changes](#Changes)
-3. [Testing](#Testing)
+1. [Common-Deliverables](#Common-Deliverables)
+3. [Personal-Deliverables](#Personal-Deliverables)
+4. [Changes](#Changes)
+5. [Testing](#Testing)
 
 ## Description
 This KF2 inspired mod is a mod in which the player chooses between three unique classes and tries to 
 survive for as long as they can agaisnt waves of enemies. From killing enemies, players can earn xp and cash,
 allowing them to become stronger by earning perks and buying new weapons and armor.
 
-## Deliverables
-Below are the deliverables for this mod:
+## Common-Deliverables
+Below are the common deliverables for this mod:
+- A desktop shortcut to automatically launch your mod
+- A README.md file in your github repository explaining what your mod is, what has been, and HOW to test each deliverable
+- Modified Main Menu
+- Modified Heads Up Display (HUD) to reflect a key feature of your mod
+- An In-Game Help screen explaining your mod changes
+
+## Personal-Deliverables
+Below are the personal deliverables for this mod:
 - Enemies Spawn in Waves
 - Three classes to choose from (Gunslinger, Demolitionist, Beserker)
 - Player earns xp and levels up to unlock perks (3 for each class)
