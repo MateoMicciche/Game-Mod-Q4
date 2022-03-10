@@ -1,9 +1,10 @@
 # Game-Mod-Q4# IT266 Quake 4 Mod - KF2 Inspired Wave Survival Mod
 
 1. [Description](#Description)
-1. [Deliverables](#Deliverables)
-1. [Changes](#Changes)
-3. [Testing](#Testing)
+1. [Personal-Deliverables](#Personal-Deliverables)
+1. [Common-Deliverables](#Common-Deliverables)
+3. [Changes](#Changes)
+4. [Testing](#Testing)
 
 ## Description
 This KF2 inspired mod is a mod in which the player chooses between three unique classes and tries to 
